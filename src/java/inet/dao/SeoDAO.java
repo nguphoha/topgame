@@ -3,29 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inet.dao.impl;
+package inet.dao;
 
 
-import inet.common.database.dao.Dao;
+import inet.common.database.dao.AbstractDAO;
 import inet.common.database.dao.RowMapper;
-import inet.dao.BaseDAO;
+import inet.constant.Constant;
 import inet.entities.Seo;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import inet.dao.SeoDAO;
 
 /**
  *
  * @author TUTL
  */
-public class SeoDaoImpl extends Dao implements SeoDAO, BaseDAO<Seo>{
+public class SeoDAO extends AbstractDAO{
 
     private RowMapper<Seo> rowMapper;
 
-    public SeoDaoImpl() throws Exception {
-        super("nhanmenh");
+    public SeoDAO() throws Exception {
+        super(Constant.POOL_NAME_DEFAULT);
 
         rowMapper = new RowMapper<Seo>() {
             Seo seo;
@@ -43,7 +42,6 @@ public class SeoDaoImpl extends Dao implements SeoDAO, BaseDAO<Seo>{
         };
     }
 
-    @Override
     public Seo getByURL(String url) throws Exception {
         String sql = "select * from seo where url = ?";
         List params = new ArrayList();

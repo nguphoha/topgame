@@ -14,14 +14,14 @@ import inet.common.database.annotation.Column;
 import inet.common.database.annotation.Table;
 import inet.common.database.pool.DBPool;
 
-public abstract class Dao {
+public abstract class AbstractDAO {
 
     protected DBPool poolX;
 
-    public Dao() {
+    public AbstractDAO() {
     }
 
-    public Dao(String poolName) throws Exception {
+    public AbstractDAO(String poolName) throws Exception {
         poolX = DBPool.getInstance(poolName);
     }
 
@@ -999,6 +999,14 @@ public abstract class Dao {
             return stmt.executeUpdate();
         } finally {
             release(null, stmt);
+        }
+    }
+    
+    public String getString(ResultSet rs,String colName, String defaultValue){
+        try{
+            return rs.getString(colName);
+        }catch(SQLException e){
+            return defaultValue;
         }
     }
 }

@@ -173,4 +173,9 @@ public class Game {
         this.hot = hot;
     }
 
+    @Override
+    public String toString() {
+        return "Game{" + "id=" + id + ", name=" + name + ", code=" + code + ", author=" + author + ", des=" + description + ", viewCount=" + viewCount + ", downloadCount=" + downloadCount + ", dateCreate=" + dateCreate + ", status=" + status + ", avatar=" + avatar + ", seoTitle=" + seoTitle + ", seoDescription=" + seoDescription + ", seoKeyword=" + seoKeyword + ", hot=" + hot + '}';
+    }
+    
 }

@@ -18,10 +18,7 @@
         <view-id value="#{indexRouter.routing}" />
     </url-mapping>      
            
-    <url-mapping id="expert-index">
-        <pattern value="/chuyen-gia-tu-van.html"/>
-        <view-id value="#{expertRouter.routing}" />   
-    </url-mapping>
+    
     
     <url-mapping id="expert-index">
         <pattern value="/chuyen-gia-tu-van/#{/[a-zA-Z-]+/code:expertRouter.code}.html"/>

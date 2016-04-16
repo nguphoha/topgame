@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <title>#{masterPageController.seoTitle}</title>
+                <meta name="description" content="#{masterPageController.seoDescrption }"/>
+                <meta name="keywords" content="#{masterPageController.seoKeyword}"/>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <link rel="icon" href="${request.contextPath}/resources/images/favicon.png"   type="image/x-icon" />
+                <meta http-equiv='cache-control' content='no-cache'/>
+                <meta http-equiv='expires' content='0'/>
+                <meta http-equiv='pragma' content='no-cache'/>
+                <script type="text/javascript" src="${request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
+                
+                <ui:insert name="headTag"/>                
+                <ui:insert name="js"/>
+            </f:facet>
+            
+                
+        </h:head>
+
+        <h:body>
+            <c:set var="realUri" value="#{masterPageController.realUri}"/>
+                 
+        </h:body>
+
+    </f:view>
+</html>

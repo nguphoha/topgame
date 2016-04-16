@@ -16,6 +16,10 @@ import java.sql.Timestamp;
 @Table(name = "category")
 public class Category {
 
+    public static int ALL = -1;
+    public static int INACTIVE = 0;
+    public static int ACTIVE = 1;
+    
     @Column(name = "id", PK = true)
     String id;
 
@@ -41,7 +45,7 @@ public class Category {
     String seoKeyword;
 
     @Column(name = "seo_description")
-    String seo_description;
+    String seoDescription;
 
     public String getId() {
         return id;
@@ -107,12 +111,17 @@ public class Category {
         this.seoKeyword = seoKeyword;
     }
 
-    public String getSeo_description() {
-        return seo_description;
+    public String getSeoDescription() {
+        return seoDescription;
     }
 
-    public void setSeo_description(String seo_description) {
-        this.seo_description = seo_description;
+    public void setSeoDescription(String seo_description) {
+        this.seoDescription = seo_description;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" + "id=" + id + ", name=" + name + ", code=" + code + ", dateCreate=" + dateCreate + ", avatar=" + avatar + ", status=" + status + ", seoTitle=" + seoTitle + ", seoKeyword=" + seoKeyword + ", seoDescription=" + seoDescription + '}';
+    }
+    
 }

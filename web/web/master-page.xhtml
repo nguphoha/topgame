@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <title>#{masterPageController.seoTitle}</title>
+                <meta name="description" content="#{masterPageController.seoDescrption }"/>
+                <meta name="keywords" content="#{masterPageController.seoKeyword}"/>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <link rel="icon" href="${request.contextPath}/resources/images/favicon.png"   type="image/x-icon" />
+                <meta http-equiv='cache-control' content='no-cache'/>
+                <meta http-equiv='expires' content='0'/>
+                <meta http-equiv='pragma' content='no-cache'/>
+                <script type="text/javascript" src="${request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
+
+                <ui:insert name="headTag"/>                
+                <ui:insert name="js"/>
+            </f:facet>
+            <f:facet name="last">
+                <h:outputStylesheet library="css" name="web_style.css" />
+            </f:facet>
+
+
+        </h:head>
+
+        <h:body>
+            <c:set var="realUri" value="#{masterPageController.realUri}"/>
+            <center>
+                <div class="Header_bg">
+                    <div class="Header">
+                        <div class="Header_logo">
+                            <img src="${request.contextPath}/resources/image/top-game-logo.png"/>
+                        </div>
+                        <select name="Danhmuc" class="Header_Danhmuc">
+                            <option>CHỌN DANH MỤC</option>
+                            <option>ANDROID</option>
+                            <option>IOS</option>
+                            <option>TẤT CẢ</option>
+                        </select>
+                        <input name="Timkiem" type="text" value="TÌM KIẾM GAME..." maxlength="5000" class="Header_Timkiem" />
+                        <button class="Header_button">
+                            TÌM KIẾM
+                        </button>
+                        <div class="Header_hotline">
+                            HOTLINE: 1900 15959
+                        </div>
+                    </div>
+                </div>
+                <div class="Menu_bg">
+                    <div class="Menu">
+                        <select name="Android" class="Menu_Android">
+                            <option>Android</option>
+                            <option>Hành động, mạo hiểm</option>
+                            <option>Chiến lược</option>
+                            <option>Game nóng bỏng</option>
+                            <option>Game đặc sắc</option>
+                            <option>Thể thao</option>
+                            <option>Trí tuệ</option>
+                            <option>Game Việt</option>
+                            <option>Game miễn phí</option>
+                            <option>Kho ứng dụng</option>
+                            <option>Game khác</option>
+                            <option>Game online</option>
+                        </select>
+                        <select name="Android" class="Menu_Android">
+                            <option>IOS</option>
+                            <option>Hành động, mạo hiểm</option>
+                            <option>Chiến lược</option>
+                            <option>Game nóng bỏng</option>
+                            <option>Game đặc sắc</option>
+                            <option>Thể thao</option>
+                            <option>Trí tuệ</option>
+                            <option>Game Việt</option>
+                            <option>Game miễn phí</option>
+                            <option>Kho ứng dụng</option>
+                            <option>Game khác</option>
+                            <option>Game online</option>
+                        </select>
+                        <div class="Menu_Content">
+                        <ul>
+                            <li><a href="#" class="active">TRANG CHỦ</a></li>
+                            <li><a href="#">MỚI NHẤT</a></li>
+                            <li><a href="#">ĐANG HOT</a></li>
+                            <li><a href="#">XEM NHIỀU</a></li>
+                        </ul>
+                        <div class="both"></div>
+                    </div>
+                    <div class="Menu_Khach">
+                        <img src="${request.contextPath}/resources/images/top-game-icon-user.png" style="padding:0 5px 3px 0;"/>Xin chào! Khách... </div>
+                    </div>
+                    </div><!-- End Menu -->
+                    
+                    <div class="Main">
+                        <ui:insert name="content"/>
+                    </div>
+                    
+                    <div class="Footer">
+                        Copyright © ABC .Điện thoại hỗ trợ: 19001255
+                    </div>
+            </center>
+        </h:body>
+
+    </f:view>
+</html>

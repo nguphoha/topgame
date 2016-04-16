@@ -1,8 +1,12 @@
 
 import inet.common.database.pool.DBPool;
-import inet.dao.SeoDao;
+import inet.dao.CategoryDAO;
+import inet.dao.GameDAO;
+import inet.entities.Category;
+import inet.entities.Game;
 import inet.util.Encrypter;
 import java.sql.Connection;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,12 +22,16 @@ public class NewClass {
     public static void main(String[] args) throws Exception {
         //System.out.println(Encrypter.encrypt("M6v2ayEunyLUnuRG"));
         DBPool.loadConfiguration(NewClass.class.getResourceAsStream("/inet/dbpool.properties"));
-        Connection con = DBPool.getInstance("bigone").getConnection();
-           if(con == null)  {
-               System.out.println("fail");
-           } else {
-               System.out.println("success");
-           }
-               
+//        Connection con = DBPool.getInstance("topgame").getConnection();
+//           if(con == null)  {
+//               System.out.println("fail");
+//           } else {
+//               System.out.println("success");
+//           }
+        GameDAO dao = GameDAO.getInstance();
+        List<Game> categories = dao.findByName("nin");
+        for(Game cat : categories){            
+            System.out.println(cat);
+        }
     }
 }

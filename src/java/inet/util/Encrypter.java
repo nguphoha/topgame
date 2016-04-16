@@ -2,7 +2,7 @@ package inet.util;
 
 public class Encrypter {
 
-    private static String encryptionKey = "OneSoft: OneSoft.com.vn";
+    private static String encryptionKey = "LifeSoft: LifeSoft.com.vn";
     private static String encryptionScheme = StringEncrypter.DES_ENCRYPTION_SCHEME;
     private static StringEncrypter encrypter = null;
 

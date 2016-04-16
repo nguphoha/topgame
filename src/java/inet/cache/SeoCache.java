@@ -10,7 +10,7 @@ import inet.entities.Seo;
 import java.util.HashMap;
 import java.util.Map;
 import inet.dao.SeoDAO;
-import inet.dao.impl.SeoDaoImpl;
+import inet.dao.SeoDAO;
 
 /**
  *
@@ -25,7 +25,7 @@ public class SeoCache extends Cache {
         Seo seo = datas.get(url);
         synchronized (datas) {
             if (seo == null) {
-                SeoDAO seoDao = new SeoDaoImpl();
+                SeoDAO seoDao = new SeoDAO();
                 seo = seoDao.getByURL(url);
                 if (seo != null) {
                     datas.put(url, seo);
