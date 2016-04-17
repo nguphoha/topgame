@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class NewClass {
     public static void main(String[] args) throws Exception {
-        //System.out.println(Encrypter.encrypt("M6v2ayEunyLUnuRG"));
+//        System.out.println(Encrypter.encrypt("topgame!@#456#@!"));
         DBPool.loadConfiguration(NewClass.class.getResourceAsStream("/inet/dbpool.properties"));
 //        Connection con = DBPool.getInstance("topgame").getConnection();
 //           if(con == null)  {
@@ -29,9 +29,10 @@ public class NewClass {
 //               System.out.println("success");
 //           }
         GameDAO dao = GameDAO.getInstance();
-        List<Game> categories = dao.findByName("nin");
-        for(Game cat : categories){            
-            System.out.println(cat);
+        List<Game> categories = dao.findByCategory(2,"ios");
+        for(Game game : categories){  
+            System.out.println("==cat "+game.getCategoryCode());
+            System.out.println(game);
         }
     }
 }

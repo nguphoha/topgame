@@ -4,6 +4,35 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-                    
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:cc="http://xmlns.jcp.org/jsf/composite/topgame">
+    <ui:define name="content">
+        
+        <!--        Danh sách game HOT nhất-->
+        <c:if test="#{typeView eq 'hot-nhat' or empty typeView}">
+            <cc:games games="#{homeController.gamesHOT}" 
+                      linkMore="${request.contextPath}/game-hot-nhat.html"
+                      title="GAME HOT NHẤT"/>
+
+        </c:if>
+        <!--        Danh sách game mới nhất-->
+        <c:if test="#{typeView eq 'moi-nhat' or empty typeView}">
+            <cc:games games="#{homeController.gamesNewest}" 
+                      linkMore="${request.contextPath}/game-moi-nhat.html"
+                      title="GAME MỚI NHẤT"/>
+        </c:if>
+        
+        <!--        Danh sách game xem nhiều nhất-->
+        <c:if test="#{typeView eq 'xem-nhieu' or empty typeView}">
+            <cc:games games="#{homeController.gamesMostView}" 
+                      linkMore="${request.contextPath}/game-xem-nhieu.html"
+                      title="GAME TẢI NHIỀU"/>    
+        </c:if>
+        
+        <!--        Danh sách game tải nhiều nhất-->
+        <c:if test="#{typeView eq 'tai-nhieu' or empty typeView}">
+            <cc:games games="#{homeController.gamesMostDownload}" linkMore="${request.contextPath}/game-tai-nhieu.html"
+                      title="GAME TẢI NHIỀU"/>    
+        </c:if>
+    </ui:define>             
 </ui:composition>

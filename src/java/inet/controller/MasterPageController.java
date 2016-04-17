@@ -5,10 +5,15 @@
  */
 package inet.controller;
 
+import com.ocpsoft.pretty.PrettyContext;
 import inet.cache.CategoryCache;
+import inet.cache.SeoCache;
 import inet.cache.management.CacheFactory;
 import inet.entities.Category;
+import inet.entities.Seo;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -26,15 +31,28 @@ public class MasterPageController extends BaseController {
     
     private List<Category> categories;
     
+    private String requestUrl;
+    
     /**
      * Creates a new instance of MasterPageBean
      */
     public MasterPageController() {
         super();
+        PrettyContext context = PrettyContext.getCurrentInstance();
+        String viewId = context.getCurrentMapping().getId();
+//        try {
+//            System.out.println("========viewId "+viewId);
+//            Seo seo  = ((SeoCache)CacheFactory.getCache("seo")).get(viewId +".html");
+//            if(seo != null){
+//                seoTitle = seo.getTitle();
+//                seoKeyword = seo.getKeyword();
+//                seoDescrption = seo.getDescription();
+//            }
+//        } catch (Exception ex) {
+//            Logger.getLogger(MasterPageController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
         categories = ((CategoryCache) CacheFactory.getCache("category")).getAll();
-        for(Category cat : categories){
-            System.out.println("============"+cat);
-        }
     }
 
     public String getSeoTitle() {
@@ -68,4 +86,14 @@ public class MasterPageController extends BaseController {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
+
+    public String getRequestUrl() {
+        return requestUrl;
+    }
+
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
+    }
+    
+    
 }

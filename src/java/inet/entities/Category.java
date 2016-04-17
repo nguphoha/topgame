@@ -21,7 +21,7 @@ public class Category {
     public static int ACTIVE = 1;
     
     @Column(name = "id", PK = true)
-    String id;
+    int id;
 
     @Column(name = "name")
     String name;
@@ -47,11 +47,11 @@ public class Category {
     @Column(name = "seo_description")
     String seoDescription;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -24,6 +24,7 @@
             </f:facet>
             <f:facet name="last">
                 <h:outputStylesheet library="css" name="web_style.css" />
+                <h:outputStylesheet library="css" name="Rep.css" />
             </f:facet>
 
 
@@ -35,7 +36,9 @@
                 <div class="Header_bg">
                     <div class="Header">
                         <div class="Header_logo">
-                            <img src="${request.contextPath}/resources/image/top-game-logo.png"/>
+                            <a href="${request.contextPath}/trang-chu.html">
+                                <img src="${request.contextPath}/resources/image/top-game-logo.png"/>
+                            </a>
                         </div>
                         <select name="Danhmuc" class="Header_Danhmuc">
                             <option>CHỌN DANH MỤC</option>
@@ -54,55 +57,233 @@
                 </div>
                 <div class="Menu_bg">
                     <div class="Menu">
-                        <select name="Android" class="Menu_Android">
+                        <select name="Android"  class="Menu_Android"  onChange="window.location.href = this.value">
                             <option>Android</option>
-                            <option>Hành động, mạo hiểm</option>
-                            <option>Chiến lược</option>
-                            <option>Game nóng bỏng</option>
-                            <option>Game đặc sắc</option>
-                            <option>Thể thao</option>
-                            <option>Trí tuệ</option>
-                            <option>Game Việt</option>
-                            <option>Game miễn phí</option>
-                            <option>Kho ứng dụng</option>
-                            <option>Game khác</option>
-                            <option>Game online</option>
+                            <c:forEach var="category" items="#{masterPageController.categories}">                                
+                                <option value="${request.contextPath}/chuyen-muc/#{category.code}.html?os=android&amp;catId=#{category.id}">
+                                    #{category.name}
+                                </option>
+                            </c:forEach>
+
                         </select>
-                        <select name="Android" class="Menu_Android">
+                        <select name="Android" class="Menu_Android"  onChange="window.location.href = this.value">
                             <option>IOS</option>
-                            <option>Hành động, mạo hiểm</option>
-                            <option>Chiến lược</option>
-                            <option>Game nóng bỏng</option>
-                            <option>Game đặc sắc</option>
-                            <option>Thể thao</option>
-                            <option>Trí tuệ</option>
-                            <option>Game Việt</option>
-                            <option>Game miễn phí</option>
-                            <option>Kho ứng dụng</option>
-                            <option>Game khác</option>
-                            <option>Game online</option>
+                            <c:forEach var="cate" items="#{masterPageController.categories}">                                
+                                <option value="${request.contextPath}/chuyen-muc/#{cate.code}.html?os=ios&amp;catId=#{cate.id}">
+                                    #{cate.name}
+                                </option>
+                            </c:forEach>
                         </select>
                         <div class="Menu_Content">
                         <ul>
-                            <li><a href="#" class="active">TRANG CHỦ</a></li>
-                            <li><a href="#">MỚI NHẤT</a></li>
-                            <li><a href="#">ĐANG HOT</a></li>
-                            <li><a href="#">XEM NHIỀU</a></li>
+                            <li><a href="${request.contextPath}/trang-chu.html" class="${empty typeView ? 'active' : ''}">TRANG CHỦ</a></li>
+                            <li><a href="${request.contextPath}/game-moi-nhat.html" class="${typeView eq 'moi-nhat' ? 'active' : ''}">MỚI NHẤT</a></li>
+                            <li><a href="${request.contextPath}/game-hot-nhat.html" class="${typeView eq 'hot-nhat' ? 'active' : ''}">ĐANG HOT</a></li>
+                            <li><a href="${request.contextPath}/game-xem-nhieu.html" class="${typeView eq 'xem-nhieu' ? 'active' : ''}">XEM NHIỀU</a></li>
                         </ul>
                         <div class="both"></div>
                     </div>
-                    <div class="Menu_Khach">
-                        <img src="${request.contextPath}/resources/images/top-game-icon-user.png" style="padding:0 5px 3px 0;"/>Xin chào! Khách... </div>
+                        <div class="Menu_Khach">
+                            <img src="${request.contextPath}/resources/images/top-game-icon-user.png" style="padding:0 5px 3px 0;"/>Xin chào! Khách... </div>
                     </div>
-                    </div><!-- End Menu -->
-                    
-                    <div class="Main">
+                </div><!-- End Menu -->
+
+                <div class="Main">
+                    <div class="Main_left">
                         <ui:insert name="content"/>
                     </div>
-                    
-                    <div class="Footer">
-                        Copyright © ABC .Điện thoại hỗ trợ: 19001255
+                    <div class="Main_right">
+                        <div class="TOPMIENPHI_title">
+                            TOP MIỄN PHÍ
+                        </div>
+                        <div class="TOPMIENPHI_List">
+                            <ul>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">1. Prehistoric Worm: Deep 
+                                            Sea</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">2. A to B: Don't Touch 
+                                            Anything</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">3. Dragon Fighters: 
+                                            Dungeon Wars</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">4. My Sweet Farm</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">5. Indy Cat And Ball of 
+                                            Fate: Match 3</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">6. Pig Wing Plus</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">7. Dragon Fighters: 
+                                            Dungeon Wars</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">8. My Sweet Farm</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="TOPMIENPHI_title">
+                            TOP THU PHÍ
+                        </div>
+                        <div class="TOPMIENPHI_List">
+                            <ul>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">1. Prehistoric Worm: Deep 
+                                            Sea</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">2. A to B: Don't Touch 
+                                            Anything</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">3. Dragon Fighters: 
+                                            Dungeon Wars</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">4. My Sweet Farm</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">5. Indy Cat And Ball of 
+                                            Fate: Match 3</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">6. Pig Wing Plus</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">7. Dragon Fighters: 
+                                            Dungeon Wars</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                                <li>
+                                    <div class="TOPMIENPHI_List_img">
+                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                    </div>
+                                    <div class="TOPMIENPHI_List_text">
+                                        <a href="#">8. My Sweet Farm</a>
+                                        <p>First Touch</p>
+                                    </div>
+                                    <div class="both"></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
+                    <div class="both"></div>
+                </div>
+
+                <div class="Footer">
+                    Copyright © ABC .Điện thoại hỗ trợ: 19001255
+                </div>
             </center>
         </h:body>
 

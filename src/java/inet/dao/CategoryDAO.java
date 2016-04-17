@@ -49,7 +49,7 @@ public class CategoryDAO extends AbstractDAO {
             public Category map(ResultSet rs) throws SQLException {
                 category = new Category();
                 
-                category.setId(rs.getString("id"));
+                category.setId(rs.getInt("id"));
                 category.setName(rs.getString("name"));
                 category.setCode(rs.getString("code"));
                 category.setStatus(rs.getString("status"));
@@ -63,13 +63,27 @@ public class CategoryDAO extends AbstractDAO {
         };
     }
 
-    public Category getByURL(String url) throws Exception {
-        String sql = "select * from seo where url = ?";
+    public Category getByCode(String code) throws Exception {
+        String sql = "select * from category where code = ?";
         List params = new ArrayList();
-        params.add(url);
+        params.add(code);
         List<Category> seos = find(sql, params, rowMapper);
         return seos.isEmpty() ? null : seos.get(0);
 
+    }
+    
+    public Category getById(int id){
+        String sql = "select * from category where id = ?";
+        List params = new ArrayList();
+        params.add(id);
+        List<Category> seos;
+        try {
+            seos = find(sql, params, rowMapper);
+            return seos.isEmpty() ? null : seos.get(0);
+        } catch (Exception ex) {
+            Logger.getLogger(CategoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return new Category();
+        }
     }
     
     public List<Category> find(int status){

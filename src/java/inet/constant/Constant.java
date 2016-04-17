@@ -8,6 +8,8 @@ public class Constant {
 
     public static final String POOL_NAME_DEFAULT = "topgame";
     
+    public static final int PAGE_SIZE = 6;
+    
     public static final String UNDER_SCORE = "_";
     // session
     public static final String CMS_SESSION_KEY = "admin";

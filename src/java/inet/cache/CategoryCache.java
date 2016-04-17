@@ -13,6 +13,8 @@ import inet.dao.CategoryDAO;
 import inet.entities.Category;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,13 +27,17 @@ public class CategoryCache extends Cache {
     private List<Category> categories = new ArrayList();
     
     
-    public Category get(String url) throws Exception {
-        Category seo = datas.get(url);
+    public Category getByCode(String code) {
+        Category seo = datas.get(code);
         synchronized (datas) {
             if (seo == null) {
-                seo = CategoryDAO.getInstance().getByURL(url);
-                if (seo != null) {
-                    datas.put(url, seo);
+                try {
+                    seo = CategoryDAO.getInstance().getByCode(code);
+                    if (seo != null) {
+                        datas.put(code, seo);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(CategoryCache.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             return seo;
