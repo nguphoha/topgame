@@ -53,14 +53,16 @@ public class BaseController implements Serializable {
     }
     
     public void pagination(int dataSize) {
-
+        
+        // init paginations array
+        paginations = new ArrayList<Pagination>();
         int display = 5;
 
         // Calculate number of page
         int phanNguyen = dataSize / pageSize;
         int phanDu = dataSize % pageSize;
         int soTrang = phanNguyen;
-        if (phanDu > 0) {
+        if (phanDu > 0 && phanNguyen > 0) {
             soTrang += 1;
         }
 
@@ -80,12 +82,11 @@ public class BaseController implements Serializable {
             display = soTrang;
         }
 
-        // init paginations array
-        paginations = new ArrayList<Pagination>();
+        
 
         // add first page
         Pagination pagination = new Pagination();
-        pagination.setLabel("1");
+        pagination.setLabel("<<");
         pagination.setValue(1);
         pagination.setRender(true);
 
@@ -94,12 +95,13 @@ public class BaseController implements Serializable {
         } else {
             pagination.setDisable(true);
         }
-        pagination.setStyle("btnIcon btnHome");
+//        pagination.setStyle("btnIcon btnHome");
+        pagination.setStyle("number");
         paginations.add(pagination);
 
         // add previous page
         pagination = new Pagination();
-        pagination.setLabel("1");
+        pagination.setLabel("<");
         pagination.setValue(curentPage - 1);
         pagination.setRender(true);
 
@@ -108,7 +110,8 @@ public class BaseController implements Serializable {
         } else {
             pagination.setDisable(true);
         }
-        pagination.setStyle("btnIcon btnBack");
+//        pagination.setStyle("btnIcon btnBack");
+        pagination.setStyle("number");
         paginations.add(pagination);
 
         // add page items
@@ -122,7 +125,7 @@ public class BaseController implements Serializable {
                 pagination.setStyle("active");
                 pagination.setDisable(true);
             } else {
-//                pagination.setStyle("page-number");
+                pagination.setStyle("number");
                 pagination.setDisable(false);
             }
             paginations.add(pagination);
@@ -130,7 +133,7 @@ public class BaseController implements Serializable {
 
         // add next page
         pagination = new Pagination();
-        pagination.setLabel("1");
+        pagination.setLabel(">");
         pagination.setValue(curentPage + 1);
         pagination.setRender(true);
 //
@@ -139,12 +142,12 @@ public class BaseController implements Serializable {
         } else {
             pagination.setDisable(false);
         }
-        pagination.setStyle("btnIcon btnNext");
+        pagination.setStyle("number");
         paginations.add(pagination);
 
         // add end page
         pagination = new Pagination();
-        pagination.setLabel("1");
+        pagination.setLabel(">>");
         pagination.setValue(soTrang);
         pagination.setRender(true);
 
@@ -153,7 +156,7 @@ public class BaseController implements Serializable {
         } else {
             pagination.setDisable(false);
         }
-        pagination.setStyle("btnIcon btnEnd");
+        pagination.setStyle("number");
         paginations.add(pagination);
     }
 

@@ -53,9 +53,11 @@ public class GameDAO extends AbstractDAO {
                 game = new Game();
                 
                 game.setId(rs.getString("id"));
+                game.setCategoryId(rs.getString("category_id"));
                 game.setName(rs.getString("name"));
                 game.setCode(rs.getString("code"));
                 game.setAuthor(rs.getString("author"));
+                game.setDescription(rs.getString("description"));
                 try{
                     game.setStatus(rs.getString("status"));
                 }catch(Exception e){}
@@ -68,8 +70,9 @@ public class GameDAO extends AbstractDAO {
                     game.setSeoKeyword(rs.getString("seo_keyword"));
                 }catch(Exception e){}
                 try{
-                    game.setDescription(rs.getString("seo_description"));
+                    game.setSeoDescription(rs.getString("seo_description"));
                 }catch(Exception e){}
+                
                 game.setViewCount(rs.getInt("view_count"));
                 game.setDownloadCount(rs.getInt("download_count"));
                 game.setHot(rs.getInt("hot"));
@@ -106,6 +109,23 @@ public class GameDAO extends AbstractDAO {
         }
     }
 
+    public Game findById(int id){
+       String sql = "SELECT G.*,C.name category_name,C.code category_code\n"
+                + " FROM game G\n"
+                + "LEFT JOIN category C ON G.`category_id` = C.`id`\n"
+                +" WHERE G.status = "+Game.ACTIVE +" AND G.id = ?";
+        List params = new ArrayList();
+        params.add(id);
+        List<Game> games;
+        try {
+            games = find(sql, params, rowMapper);
+            return games.isEmpty() ? null : games.get(0);
+        } catch (Exception ex) {
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     /**
      * find game HOT theo category
      * @param catId
@@ -116,15 +136,14 @@ public class GameDAO extends AbstractDAO {
     public List<Game> findGameHot(int catId, int page, int pageSize){
         String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n"
                 + " FROM game G\n"
-                + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
-                + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n"
+                + "LEFT JOIN category C ON G.`category_id` = C.`id`\n"
                 +" WHERE G.hot = " + Game.HOT + " AND G.status = "+Game.ACTIVE;
         List params = new ArrayList();
         if(catId > 0){
             sql += " AND C.id = ?";
             params.add(catId);            
         }
-        return loadGame(sql, params, page, pageSize);
+        return loadGameWithPaging(sql, params, page, pageSize);
     }
     
     public int countGameHot(){
@@ -141,78 +160,33 @@ public class GameDAO extends AbstractDAO {
         }
     }
     
-     public List<Game> findByName(String name){
-        String sql = "SELECT * FROM game WHERE upper(game.name) LIKE '%' || upper(?) || '%'";
-        List params = new ArrayList();
-        params.add(name);
-        List<Game> games;
-        try {
-            games = find(sql, params, rowMapper);
-            return games.isEmpty() ? null : games;
-        } catch (Exception ex) {
-            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-     }
-    
-    public List<Game> findGameNewest(int catId, int page, int pageSize){
+    /**
+     * find game HOT theo category
+     * @param catId
+     * @param page
+     * @param pageSize
+     * @return 
+     */
+    public List<Game> findTopGameFree(){
         String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n"
                 + " FROM game G\n"
-                + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
-                + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n"
-                + " WHERE G.status = "+ Game.ACTIVE;
-        List params = new ArrayList();       
-        if(catId > 0){
-            sql += " AND C.id = ?";
-            params.add(catId);              
-        }
-                sql += " ORDER BY date_create DESC";
-        return loadGame(sql, params, page, pageSize);
-    }
-    
-    public List<Game> findGameMostView(int catId, int page, int pageSize){
-        String sql = "SELECT distinct  G.*,C.name category_name,C.code category_code\n"
-                + " FROM game G\n"
-                + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
-                + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n" 
-                + " WHERE G.status = "+ Game.ACTIVE;;
+                + "LEFT JOIN category C ON G.`category_id` = C.`id`\n"
+                +" WHERE G.is_free = 1 AND G.status = "+Game.ACTIVE + " ORDER BY G.date_create DESC";
         List params = new ArrayList();
-         if(catId > 0){
-            sql += " AND C.id = ?";
-            params.add(catId);              
-        }
-        sql += " ORDER BY G.`view_count` DESC ";
         
-        return loadGame(sql, params, page, pageSize);
+        return loadGameWithPaging(sql, params, 1, 8);
     }
     
-    public List<Game> findGameMostDownload(int catId, int page, int pageSize){
-        String sql = "SELECT distinct  G.*,C.name category_name,C.code category_code\n"
+    public List<Game> findByName(String name, String os){
+        String sql = "SELECT G.*, C.name category_name, C.code category_code "
                 + " FROM game G\n"
-                + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
-                + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n" 
-                + " WHERE G.status = "+ Game.ACTIVE;;
+                + " INNER JOIN category C on C.id = G.category_id"
+                + " LEFT JOIN game_os GO ON GO.`game_id` = G.`id`\n"
+                + " LEFT JOIN os O ON GO.`os_id` = O.`id`\n"
+                + " WHERE upper(G.name) LIKE  concat('%',upper(?),'%')";
         List params = new ArrayList();
-         if(catId > 0){
-            sql += " AND C.id = ?";
-            params.add(catId);              
-        }
-        sql += " ORDER BY G.`download_count` DESC ";
-        
-        return loadGame(sql, params, page, pageSize);
-    }
-    
-    public List<Game> findByCategory(int catId, String os){
-        String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n" +
-                    "FROM game G\n" +
-                    "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" +
-                    "LEFT JOIN category C ON GC.`category_id` = C.`id`\n" +
-                    "LEFT JOIN game_os GO ON GO.`game_id` = G.`id`\n" +
-                    "LEFT JOIN os O ON GO.`os_id` = O.`id`\n" +
-                    "WHERE C.`id` = ? ";
-        List params = new ArrayList();
-        params.add(catId);
-        if(!StringUtils.isBlank(os)){
+        params.add(name);
+        if(os != null && !"".equals(os)){
             sql += " AND O.code = ?";
             params.add(os);
         }
@@ -224,9 +198,111 @@ public class GameDAO extends AbstractDAO {
             Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+     }
+    
+    /**
+     * Danh sách game mới nhất, order theo date_create
+     * @param catId chuyên mục id
+     * @param page số trang
+     * @param pageSize page size
+     * @return 
+     */
+    public List<Game> findGameNewest(int catId, int page, int pageSize){
+        String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n"
+                + " FROM game G\n"
+                + "LEFT JOIN category C ON G.`category_id` = C.`id`\n"
+                + " WHERE G.status = "+ Game.ACTIVE;
+        List params = new ArrayList();       
+        if(catId > 0){
+            sql += " AND C.id = ?";
+            params.add(catId);              
+        }
+                sql += " ORDER BY date_create DESC";
+        return loadGameWithPaging(sql, params, page, pageSize);
     }
     
-    public List<Game> loadGame(String sql, List params, int page, int pageSize ){
+    public int countGame(){
+        String sql = "SELECT count(G.id) count_game\n"
+                + " FROM game G\n"
+                +" WHERE G.status = "+Game.ACTIVE;
+        List params = new ArrayList();
+        
+        try {
+            return  executeQueryCountGame(sql, params);            
+        } catch (Exception ex) {
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+    
+    public List<Game> findGameMostView(int catId, int page, int pageSize){
+        String sql = "SELECT distinct  G.*,C.name category_name,C.code category_code\n"
+                + " FROM game G\n"
+                + "LEFT JOIN category C ON G.`category_id` = C.`id`\n" 
+                + " WHERE G.status = "+ Game.ACTIVE;;
+        List params = new ArrayList();
+         if(catId > 0){
+            sql += " AND C.id = ?";
+            params.add(catId);              
+        }
+        sql += " ORDER BY G.`view_count` DESC ";
+        
+        return loadGameWithPaging(sql, params, page, pageSize);
+    }
+    
+    public List<Game> findGameMostDownload(int catId, int page, int pageSize){
+        String sql = "SELECT distinct  G.*,C.name category_name,C.code category_code\n"
+                + " FROM game G\n"
+                + "LEFT JOIN category C ON G.`category_id` = C.`id`\n" 
+                + " WHERE G.status = "+ Game.ACTIVE;;
+        List params = new ArrayList();
+         if(catId > 0){
+            sql += " AND C.id = ?";
+            params.add(catId);              
+        }
+        sql += " ORDER BY G.`download_count` DESC ";
+        
+        return loadGameWithPaging(sql, params, page, pageSize);
+    }
+    
+    public List<Game> findByCategory(int catId, String os, int page, int pageSize){
+        String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n" +
+                    "FROM game G\n" +
+                    "LEFT JOIN category C ON G.`category_id` = C.`id`\n" +
+                    "LEFT JOIN game_os GO ON GO.`game_id` = G.`id`\n" +
+                    "LEFT JOIN os O ON GO.`os_id` = O.`id`\n" +
+                    "WHERE C.`id` = ? ";
+        List params = new ArrayList();
+        params.add(catId);
+        if(os != null && !"".equals(os)){
+            sql += " AND O.code = ?";
+            params.add(os);
+        }
+        return loadGameWithPaging(sql, params, page, pageSize);
+    }
+    
+    public int countGameByCategory(int catId, String os){
+        String sql = "SELECT count(G.id)\n" +
+                    "FROM game G\n" +
+                    "LEFT JOIN category C ON G.`category_id` = C.`id`\n" +
+                    "LEFT JOIN game_os GO ON GO.`game_id` = G.`id`\n" +
+                    "LEFT JOIN os O ON GO.`os_id` = O.`id`\n" +
+                    "WHERE C.`id` = ? ";
+        List params = new ArrayList();
+        params.add(catId);
+        if(os != null && !"".equals(os)){
+            sql += " AND O.code = ?";
+            params.add(os);
+        }
+        try {
+            return  executeQueryCountGame(sql, params);         
+        } catch (Exception ex) {
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
+    }
+    
+    public List<Game> loadGameWithPaging(String sql, List params, int page, int pageSize ){
         int offset = (page -1 ) * pageSize;
         sql  += "\n LIMIT ?,?";
         params.add(offset);

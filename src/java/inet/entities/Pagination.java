@@ -57,4 +57,10 @@ public class Pagination implements Serializable {
     public void setStyle(String style) {
         this.style = style;
     }
+
+    @Override
+    public String toString() {
+        return "Pagination{" + "label=" + label + ", value=" + value + ", render=" + render + ", disable=" + disable + ", style=" + style + '}';
+    }
+    
 }

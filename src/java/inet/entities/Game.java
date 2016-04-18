@@ -7,7 +7,9 @@ package inet.entities;
 
 import inet.common.database.annotation.Column;
 import inet.common.database.annotation.Table;
+import inet.util.StringUtil;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -25,6 +27,9 @@ public class Game {
 
     @Column(name = "id", PK = true)
     String id;
+    
+    @Column(name = "category_id")
+    String categoryId;
 
     @Column(name = "name")
     String name;
@@ -127,6 +132,10 @@ public class Game {
     public Timestamp getDateCreate() {
         return dateCreate;
     }
+    
+    public String getDateCreateString() {
+        return dateCreate == null ?"" : StringUtil.format(new Date(dateCreate.getTime()), "dd/MM/yyyy hh:mm:ss aaa");
+    }
 
     public void setDateCreate(Timestamp dateCreate) {
         this.dateCreate = dateCreate;
@@ -194,6 +203,14 @@ public class Game {
 
     public void setCategoryCode(String categoryCode) {
         this.categoryCode = categoryCode;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
     
     @Override

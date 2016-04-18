@@ -8,6 +8,7 @@ package inet.controller;
 import inet.constant.Constant;
 import inet.dao.GameDAO;
 import inet.entities.Game;
+import inet.entities.Pagination;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -33,21 +34,35 @@ public class HomeController extends BaseController{
     
     private int categoryId = 0;
     
-    private boolean isActionMore = false;
+    private boolean isShowPaging = false;
     /**
      * Creates a new instance of HomeController
      */
     public HomeController() {
         super();
-        if(getParameter("action") != null && "view-more".equals(getParameter("action"))){
-            isActionMore = true;
-        }
-     
+        init();
     }
 
+    private void init(){
+//        if(getParameter("action") != null && "view-more".equals(getParameter("action"))){
+//            isShowPaging = true;
+//        }
+        isShowPaging = getParameter("typeView") != null;
+//        System.out.println("=========="+ getParameter("typeView"));
+        if(getParameter("p") != null){
+            try{
+                setCurentPage(Integer.valueOf(getParameter("p")));
+            }catch(Exception e){}
+        }        
+    }
+    
     public List<Game> getGamesNewest() {
         if(gamesNewest.isEmpty()){
-            gamesNewest = GameDAO.getInstance().findGameNewest(categoryId,getCurentPage(), getPageSize());
+            gamesNewest = GameDAO.getInstance().findGameNewest(categoryId, getCurentPage(), getPageSize());
+            if(isShowPaging){
+                int count = GameDAO.getInstance().countGame();
+                pagination(count);
+            }
         }
         return gamesNewest;
     }
@@ -59,6 +74,10 @@ public class HomeController extends BaseController{
     public List<Game> getGamesMostView() {
         if(gamesMostView.isEmpty()){
             gamesMostView = GameDAO.getInstance().findGameMostView(categoryId,getCurentPage(), getPageSize());
+            if(isShowPaging){
+                int count = GameDAO.getInstance().countGame();
+                pagination(count);
+            }
         }
         return gamesMostView;
     }
@@ -70,6 +89,10 @@ public class HomeController extends BaseController{
     public List<Game> getGamesMostDownload() {
         if(gamesMostDownload.isEmpty()){
             gamesMostDownload = GameDAO.getInstance().findGameMostDownload(categoryId,getCurentPage(), getPageSize());
+            if(isShowPaging){
+                int count = GameDAO.getInstance().countGame();
+                pagination(count);
+            }
         }
         return gamesMostDownload;
     }
@@ -79,11 +102,11 @@ public class HomeController extends BaseController{
     }
 
     public List<Game> getGamesHOT() {
-        if(gamesHOT.isEmpty()){
+        if(gamesHOT.isEmpty()){ 
             gamesHOT = GameDAO.getInstance().findGameHot(categoryId, getCurentPage(), getPageSize());
-            if(isActionMore){
-                System.out.println("============view more game hot");
-                
+            if(isShowPaging){
+                int count = GameDAO.getInstance().countGameHot();
+                pagination(count);
             }
         }
         return gamesHOT;

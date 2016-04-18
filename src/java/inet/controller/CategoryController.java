@@ -26,6 +26,7 @@ public class CategoryController extends BaseController{
     private String osType;
     private int catId= 0;
     private String categoryCode ;
+    private String categoryName;
     
     private List<Game> games = new ArrayList();
     
@@ -39,18 +40,31 @@ public class CategoryController extends BaseController{
         try{
             catId = Integer.valueOf(getParameter("catId"));
         }catch(Exception e){}
-        System.out.println("====code "+getParameter("code"));
+        
         categoryCode = getParameter("code");
+        if(getParameter("p") != null){
+            try{
+                setCurentPage(Integer.valueOf(getParameter("p")));
+            }catch(Exception e){}
+        }
+        
+        initData();
+    }
+
+    private void initData(){
         CategoryCache cache = (CategoryCache)CacheFactory.getCache("category");
         if(cache != null){
             Category category = cache.getByCode(categoryCode);
             if(category != null){
                 System.out.println("====osType ="+osType+"|catId = "+category.getId());
-                games = GameDAO.getInstance().findByCategory(category.getId(), osType);
+                categoryName = category.getName();
+                games = GameDAO.getInstance().findByCategory(category.getId(), osType, getCurentPage(), getPageSize());
+                int count = GameDAO.getInstance().countGameByCategory(category.getId(), osType);
+                pagination(count);
             }
         }
     }
-
+    
     public String getOsType() {
         return osType;
     }
@@ -73,6 +87,22 @@ public class CategoryController extends BaseController{
 
     public void setGames(List<Game> games) {
         this.games = games;
+    }
+
+    public String getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
     
 }
