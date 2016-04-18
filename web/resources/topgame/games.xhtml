@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <!-- INTERFACE -->
     <cc:interface>
@@ -13,28 +14,31 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
-        <div class="Title">
-           #{cc.attrs.title}
-          </div>
-        <div class="GameHOT">
-            <ul>
-                <c:forEach var="game" items="#{cc.attrs.games}">
-                    <li>
-                        <div class="GameHOT_box">
-                            <a href="#"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
-                            <div class="GameHOT_box_text">
-                                <a href="#">#{game.name}</a>
-                                <p><a href="${request.contextPath}/chuyen-muc/#{game.categoryCode}.html">#{game.categoryName}</a></p>
+        <h:form>
+            
+            <div class="Title">
+               #{cc.attrs.title}
+              </div>
+            <div class="GameHOT">
+                <ul>
+                    <c:forEach var="game" items="#{cc.attrs.games}">
+                        <li>
+                            <div class="GameHOT_box">
+                                <a href="#"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
+                                <div class="GameHOT_box_text">
+                                    <a href="#">#{game.name}</a>
+                                    <p><a href="${request.contextPath}/chuyen-muc/#{game.categoryCode}.html">#{game.categoryName}</a></p>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </c:forEach>
-            </ul>
-        </div>
-        <div class="GameHOT_button">
-            <button class="GameHOT_button_form">
-                <a href="#{cc.attrs.linkMore}?action=view-more">XEM THÊM</a>
-            </button>
-        </div>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+            <div class="GameHOT_button">
+                <button class="GameHOT_button_form">
+                    <a href="#{cc.attrs.linkMore}?action=view-more">XEM THÊM</a>
+                </button>
+            </div>
+        </h:form>
     </cc:implementation>
 </html>

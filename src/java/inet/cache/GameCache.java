@@ -7,6 +7,7 @@ package inet.cache;
 
 import inet.cache.management.Cache;
 import inet.dao.GameDAO;
+import inet.entities.Game;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
  * @author Admin
  */
 public class GameCache extends Cache{
-    
+    private Map<String, Game> datas = new HashMap<String, Game>();
     private Map<String, Integer> countGameCache = new HashMap<String,Integer>();
     
     public int countGameHot(){

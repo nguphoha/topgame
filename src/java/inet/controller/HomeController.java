@@ -81,6 +81,10 @@ public class HomeController extends BaseController{
     public List<Game> getGamesHOT() {
         if(gamesHOT.isEmpty()){
             gamesHOT = GameDAO.getInstance().findGameHot(categoryId, getCurentPage(), getPageSize());
+            if(isActionMore){
+                System.out.println("============view more game hot");
+                
+            }
         }
         return gamesHOT;
     }
