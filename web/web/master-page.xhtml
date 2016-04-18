@@ -31,13 +31,14 @@
         </h:head>
 
         <h:body>
+            <c:set var="resourceImage" value="${request.contextPath}/resources/images"/>
             <c:set var="realUri" value="#{masterPageController.realUri}"/>
             <center>
                 <div class="Header_bg">
                     <div class="Header">
                         <div class="Header_logo">
                             <a href="${request.contextPath}/trang-chu.html">
-                                <img src="${request.contextPath}/resources/images/top-game-logo.png"/>
+                                <img src="${resourceImage}/top-game-logo.png"/>
                             </a>
                         </div>
                         <select name="Danhmuc" class="Header_Danhmuc">
@@ -46,7 +47,7 @@
                             <option>IOS</option>
                             <option>TẤT CẢ</option>
                         </select>
-                        <input name="Timkiem" type="text" value="TÌM KIẾM GAME..." maxlength="5000" class="Header_Timkiem" />
+                        <input name="Timkiem" type="text"  value="TÌM KIẾM GAME..." maxlength="5000" class="Header_Timkiem" />
                         <button class="Header_button">
                             TÌM KIẾM
                         </button>
@@ -84,7 +85,11 @@
                         <div class="both"></div>
                     </div>
                         <div class="Menu_Khach">
-                            <img src="${request.contextPath}/resources/images/top-game-icon-user.png" style="padding:0 5px 3px 0;"/>Xin chào! Khách... </div>
+                            <img src="${resourceImage}/top-game-icon-user.png" style="padding:0 5px 3px 0;"/>
+                            <a href="${request.contextPath}/dang-nhap.html">
+                                Xin chào! Khách... 
+                            </a>
+                        </div>
                     </div>
                 </div><!-- End Menu -->
 
@@ -100,7 +105,7 @@
                             <ul>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-1.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">1. Prehistoric Worm: Deep 
@@ -111,7 +116,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-2.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">2. A to B: Don't Touch 
@@ -122,7 +127,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-3.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">3. Dragon Fighters: 
@@ -133,7 +138,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-4.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">4. My Sweet Farm</a>
@@ -143,7 +148,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-1.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">5. Indy Cat And Ball of 
@@ -154,7 +159,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-3.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">6. Pig Wing Plus</a>
@@ -164,7 +169,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-2.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">7. Dragon Fighters: 
@@ -175,7 +180,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-4.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">8. My Sweet Farm</a>
@@ -192,7 +197,7 @@
                             <ul>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-1.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">1. Prehistoric Worm: Deep 
@@ -203,7 +208,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-2.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">2. A to B: Don't Touch 
@@ -214,7 +219,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-3.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">3. Dragon Fighters: 
@@ -225,7 +230,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-4.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">4. My Sweet Farm</a>
@@ -235,7 +240,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-1.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-1.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">5. Indy Cat And Ball of 
@@ -246,7 +251,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-3.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-3.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">6. Pig Wing Plus</a>
@@ -256,7 +261,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-2.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-2.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">7. Dragon Fighters: 
@@ -267,7 +272,7 @@
                                 </li>
                                 <li>
                                     <div class="TOPMIENPHI_List_img">
-                                        <a href="#"><img src="${request.contextPath}/resources/images/top-game-topmienphi-img-4.png"/></a>
+                                        <a href="#"><img src="${resourceImage}/top-game-topmienphi-img-4.png"/></a>
                                     </div>
                                     <div class="TOPMIENPHI_List_text">
                                         <a href="#">8. My Sweet Farm</a>

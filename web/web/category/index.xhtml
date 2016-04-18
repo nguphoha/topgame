@@ -14,7 +14,7 @@
                     <c:forEach var="game" items="#{categoryController.games}">
                         <li>
                             <div class="GameHOT_box">
-                                <a  href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
+                                <a  href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}"><img src="${resourceImage}/top-game-hotgame-img-1.png"/></a>
                                 <div class="GameHOT_box_text">
                                     <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}">#{game.name}</a>
                                     <p>#{game.categoryName}</p>

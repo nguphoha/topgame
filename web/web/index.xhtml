@@ -3,8 +3,9 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:cc="http://xmlns.jcp.org/jsf/composite/topgame">
-    <ui:define name="content">
-        
+    
+    
+    <ui:define name="content">        
         <!--        Danh sách game HOT nhất-->
         <c:if test="#{typeView eq 'hot-nhat' or empty typeView}">
             <cc:games games="#{homeController.gamesHOT}" 

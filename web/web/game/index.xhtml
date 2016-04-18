@@ -13,7 +13,7 @@
         </div>
         <div class="Pages_chitiet_content">
             <div class="Pages_chitiet_content_img">
-                <img src="${request.contextPath}/resources/images/top-game-chitietgame-img-1.png"/>
+                <img src="${resourceImage}/top-game-chitietgame-img-1.png"/>
             </div>
             <div class="Pages_chitiet_content_text">
                 <p>#{gameController.game.name}</p>
@@ -43,7 +43,7 @@
                 <c:forEach var="game" items="#{gameController.gamesRelative}">
                     <li>
                         <div class="GameHOT_box">
-                            <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
+                            <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}"><img src="${resourceImage}/top-game-hotgame-img-1.png"/></a>
                             <div class="GameHOT_box_text">
                                 <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}">#{game.name}</a>
                                 <p><a href="${request.contextPath}/chuyen-muc-#{game.categoryCode}.html">#{game.categoryName}</a></p>

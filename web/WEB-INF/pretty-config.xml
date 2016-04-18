@@ -21,12 +21,17 @@
     <url-mapping id="trang-chu">
         <pattern value="/"/>
         <view-id value="#{indexRouter.routing}" />
-    </url-mapping>              
+    </url-mapping>   
+               
     <url-mapping id="chi-tiet-game">
         <pattern value="/chi-tiet-game-#{/[a-zA-Z-]+/gameCode}.html"/>
         <view-id value="#{gameRouter.routing}" />
     </url-mapping>              
     
+    <url-mapping id="dang-nhap">
+        <pattern value="/dang-nhap.html"/>
+          <view-id value="#{loginRouter.routing}"/>
+    </url-mapping>
     
     <url-mapping id="expert-index">
         <pattern value="/chuyen-gia-tu-van/#{/[a-zA-Z-]+/code:expertRouter.code}.html"/>

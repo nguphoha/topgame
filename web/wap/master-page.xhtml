@@ -18,17 +18,160 @@
                 <meta http-equiv='expires' content='0'/>
                 <meta http-equiv='pragma' content='no-cache'/>
                 <script type="text/javascript" src="${request.contextPath}/resources/js/jquery-1.11.2.min.js"></script>
-                
+
+                <link href='http://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=vietnamese,latin,latin-ext' rel='stylesheet' type='text/css'/>
+                <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&amp;subset=vietnamese,latin,latin-ext" />
+                <script>
+                    $(document).ready(function (e) {
+                        $('.Footer_bg_link').click(function () {
+                            $(this).next().stop().slideToggle(200);
+                        });
+
+                        $('.Header_Timkiem').click(function () {
+                            $(this).next().stop().slideDown(200);
+                            $('.BoxTimkiem_bg').stop().fadeIn();
+                        });
+                        $('.BoxTimkiem_bg').click(function () {
+                            $('.BoxTimkiem').stop().slideUp(200);
+                            $('.BoxTimkiem_bg').stop().fadeOut();
+                        });
+
+                        var b = true;
+                        $('.Header_menu .Menu_Icon').click(function () {
+                            if (b) {
+                                $(this).next().stop().animate({'left': '0'}, 200);
+                                $('.Header_menu .Menubg').stop().fadeIn();
+                                b = false;
+                            } else {
+                                $(this).next().stop().animate({'left': '-280'}, 100);
+                                $('.Header_menu .Menubg').stop().fadeOut();
+                                b = true;
+                            }
+                        });
+                        $('.Header_menu .Menubg').click(function () {
+                            $(this).prev().stop().animate({'left': '-280'}, 100);
+                            $('.Header_menu .Menubg').stop().fadeOut();
+                            b = true;
+                        });
+                    });
+                </script>
                 <ui:insert name="headTag"/>                
                 <ui:insert name="js"/>
             </f:facet>
-            
-                
+            <f:facet name="last">
+                <h:outputStylesheet library="css" name="wap_style.css" />
+                <h:outputStylesheet library="css" name="Rep.css" />
+            </f:facet>
+
+
         </h:head>
 
         <h:body>
+            <c:set var="resourceImage" value="${request.contextPath}/resources/images"/>
             <c:set var="realUri" value="#{masterPageController.realUri}"/>
-                 
+            <center>
+                <div class="Header_bg">
+                    <img src="${resourceImage}/top-game-logo.png" style="padding:8px 0 0 0;"/>
+                    <div class="Header_menu">
+                        <a href="#" class="Menu_Icon"><img src="${resourceImage}/top-game-icon-menu.png"/></a>
+                        <div class="Menu_Left_list">
+                            <ul>
+                                <li><a href="#"><img src="${resourceImage}/top-game-icon-danhmucgame.png" class="Menu_Left_list_kc"/>DANH MỤC GAME</a>
+                                    <div class="Menu_Left_sublist">
+                                        <ul>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-hanhdong.png" class="Menu_Left_icon_kc"/>Hành động</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-gamenongbong.png" class="Menu_Left_icon_kc"/>Game Nóng bỏng</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-gamedacsac.png" class="Menu_Left_icon_kc"/>Game Đặc sắc</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-thethao.png" class="Menu_Left_icon_kc"/>Thể thao</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-tritue.png" class="Menu_Left_icon_kc"/>Trí tuệ</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-gameviet.png" class="Menu_Left_icon_kc"/>Game Việt</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-gamemienphi.png" class="Menu_Left_icon_kc"/>Game Miễn phí</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-khoungdung.png" class="Menu_Left_icon_kc"/>Kho Ứng dụng</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-gamekhac.png" class="Menu_Left_icon_kc"/>Game Khác</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <a href="#"><img src="${resourceImage}/top-game-icon-gameonline.png" class="Menu_Left_icon_kc"/>Game Online</a>
+                                                <div class="Menu_Left_sublist_soluonggame">
+                                                    123
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="Menubg"></div>
+                    </div>
+                    <div class="Header_Timkiem">
+                        <a href="#"><img src="${resourceImage}/top-game-icon-timkiem.png"/></a>
+                    </div>
+                    <div class="BoxTimkiem">
+                        <select name="Android" class="Menu_Android">
+                            <option>Tất cả Game</option>
+                            <option>Hành động, mạo hiểm</option>
+                            <option>Chiến lược</option>
+                            <option>Game nóng bỏng</option>
+                            <option>Game đặc sắc</option>
+                            <option>Thể thao</option>
+                            <option>Trí tuệ</option>
+                            <option>Game Việt</option>
+                            <option>Game miễn phí</option>
+                            <option>Kho ứng dụng</option>
+                            <option>Game khác</option>
+                            <option>Game online</option>
+                        </select><br />
+                        <input name="timkiem" type="text" value="Nhập game tìm kiếm..." maxlength="1000" class="Menu_Android_timkiem" /><br />
+                        <button class="Menu_Android_button">
+                            TÌM KIẾM
+                        </button>	         
+                    </div>
+                    <div class="BoxTimkiem_bg"></div>
+                </div>
+            </center>
         </h:body>
 
     </f:view>
