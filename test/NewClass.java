@@ -29,10 +29,11 @@ public class NewClass {
 //               System.out.println("success");
 //           }
         GameDAO dao = GameDAO.getInstance();
-        List<Game> categories = dao.findByCategory(2,"ios");
-        for(Game game : categories){  
-            System.out.println("==cat "+game.getCategoryCode());
-            System.out.println(game);
-        }
+//        List<Game> categories = dao.findByCategory(2,"ios");
+//        for(Game game : categories){  
+//            System.out.println("==cat "+game.getCategoryCode());
+//            System.out.println(game);
+//        }
+        System.out.println("=====count "+dao.countGameHot());
     }
 }

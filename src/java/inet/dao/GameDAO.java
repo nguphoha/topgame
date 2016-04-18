@@ -11,6 +11,8 @@ import inet.common.database.dao.RowMapper;
 import inet.constant.Constant;
 import inet.entities.Category;
 import inet.entities.Game;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -112,7 +114,7 @@ public class GameDAO extends AbstractDAO {
      * @return 
      */
     public List<Game> findGameHot(int catId, int page, int pageSize){
-        String sql = "SELECT  G.*,C.name category_name,C.code category_code\n"
+        String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n"
                 + " FROM game G\n"
                 + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
                 + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n"
@@ -123,6 +125,20 @@ public class GameDAO extends AbstractDAO {
             params.add(catId);            
         }
         return loadGame(sql, params, page, pageSize);
+    }
+    
+    public int countGameHot(){
+        String sql = "SELECT count(G.id) count_game\n"
+                + " FROM game G\n"
+                +" WHERE G.hot = " + Game.HOT + " AND G.status = "+Game.ACTIVE;
+        List params = new ArrayList();
+        
+        try {
+            return  executeQueryCountGame(sql, params);            
+        } catch (Exception ex) {
+            Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return 0;
+        }
     }
     
      public List<Game> findByName(String name){
@@ -140,7 +156,7 @@ public class GameDAO extends AbstractDAO {
      }
     
     public List<Game> findGameNewest(int catId, int page, int pageSize){
-        String sql = "SELECT  G.*,C.name category_name,C.code category_code\n"
+        String sql = "SELECT distinct G.*,C.name category_name,C.code category_code\n"
                 + " FROM game G\n"
                 + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
                 + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n"
@@ -155,7 +171,7 @@ public class GameDAO extends AbstractDAO {
     }
     
     public List<Game> findGameMostView(int catId, int page, int pageSize){
-        String sql = "SELECT  G.*,C.name category_name,C.code category_code\n"
+        String sql = "SELECT distinct  G.*,C.name category_name,C.code category_code\n"
                 + " FROM game G\n"
                 + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
                 + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n" 
@@ -171,7 +187,7 @@ public class GameDAO extends AbstractDAO {
     }
     
     public List<Game> findGameMostDownload(int catId, int page, int pageSize){
-        String sql = "SELECT  G.*,C.name category_name,C.code category_code\n"
+        String sql = "SELECT distinct  G.*,C.name category_name,C.code category_code\n"
                 + " FROM game G\n"
                 + "LEFT JOIN game_category GC ON G.`id` = GC.`game_id`\n" 
                 + "LEFT JOIN category C ON GC.`category_id` = C.`id`\n" 
@@ -223,5 +239,28 @@ public class GameDAO extends AbstractDAO {
             Logger.getLogger(GameDAO.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    
+    public Integer executeQueryCountGame(String sql, List<Object> parameters) throws Exception {
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            connection = getConnection();
+            stmt = connection.prepareStatement(sql);
+            if (parameters != null) {
+                setParameters(stmt, parameters);
+            }
+            rs = stmt.executeQuery();
+            rs.setFetchSize(100);
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } finally {
+            release(connection, stmt, rs);
+        }
+        return null;
+
     }
 }

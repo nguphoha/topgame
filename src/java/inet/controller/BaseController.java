@@ -6,6 +6,7 @@ package inet.controller;
 
 import com.ocpsoft.pretty.PrettyContext;
 import inet.common.log.Logger;
+import inet.constant.Constant;
 import inet.entities.Pagination;
 import inet.entities.UserAgent;
 import inet.util.StringUtil;
@@ -29,7 +30,7 @@ public class BaseController implements Serializable {
 
     protected int curentPage = 1;
     protected List<Pagination> paginations;
-    protected int pageSize = 10;
+    protected int pageSize = Constant.PAGE_SIZE;
     private static Logger console = new Logger("console");
     private static Logger error = new Logger("error");
     public boolean isMobile = false;
@@ -301,7 +302,7 @@ public class BaseController implements Serializable {
         error.info(ex);
     }
 
-    public String uRLFriendly(String s) {
+    public String urlFriendly(String s) {
         if (s == null) {
             return "";
         }
@@ -311,4 +312,12 @@ public class BaseController implements Serializable {
         return s.toLowerCase();
     }
 
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+    
 }

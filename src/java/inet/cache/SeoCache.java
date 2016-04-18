@@ -10,7 +10,6 @@ import inet.entities.Seo;
 import java.util.HashMap;
 import java.util.Map;
 import inet.dao.SeoDAO;
-import inet.dao.SeoDAO;
 
 /**
  *

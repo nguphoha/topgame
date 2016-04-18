@@ -57,6 +57,7 @@ public class CategoryCache extends Cache {
     public void clearCache() {
         synchronized (this) {
             datas.clear();
+            categories.clear();
         }
     }
 
