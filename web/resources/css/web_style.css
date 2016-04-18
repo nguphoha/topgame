@@ -537,6 +537,29 @@ img{vertical-align:middle; border:0;}
 	font-family: 'Roboto', sans-serif;
 }
 
-	
-	
-
+/*---------SOTRANG------------*/
+.SoTrang{
+	padding:15px 0 15px 0;
+	text-align:center;
+}
+.SoTrang_active{
+	background-color:#77bb00;
+	border:1px solid#649d00;
+	text-align:center;
+	padding:5px 10px 5px 10px;
+	color:#FFF;
+	font-size:12px;
+}
+.SoTrang_number{
+	background-color:#ffffff;
+	border:1px solid#649d00;
+	text-align:center;
+	padding:5px 10px 5px 10px;
+	color:#669f01;
+	font-size:12px;
+}
+.SoTrang_number:hover{
+	background-color:#77bb00;
+	border:1px solid#649d00;
+	color:#FFF;
+}

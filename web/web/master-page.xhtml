@@ -60,7 +60,7 @@
                         <select name="Android"  class="Menu_Android"  onChange="window.location.href = this.value">
                             <option>Android</option>
                             <c:forEach var="category" items="#{masterPageController.categories}">                                
-                                <option value="${request.contextPath}/chuyen-muc/#{category.code}.html?os=android&amp;catId=#{category.id}">
+                                <option value="${request.contextPath}/chuyen-muc-#{category.code}.html?os=android&amp;catId=#{category.id}">
                                     #{category.name}
                                 </option>
                             </c:forEach>
@@ -69,7 +69,7 @@
                         <select name="Android" class="Menu_Android"  onChange="window.location.href = this.value">
                             <option>IOS</option>
                             <c:forEach var="cate" items="#{masterPageController.categories}">                                
-                                <option value="${request.contextPath}/chuyen-muc/#{cate.code}.html?os=ios&amp;catId=#{cate.id}">
+                                <option value="${request.contextPath}/chuyen-muc-#{cate.code}.html?os=ios&amp;catId=#{cate.id}">
                                     #{cate.name}
                                 </option>
                             </c:forEach>

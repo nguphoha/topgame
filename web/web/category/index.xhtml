@@ -7,17 +7,17 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="content">
             <div class="Title">
-                GAME HOT NHẤT
+                Game #{categoryController.categoryName}
             </div>
             <div class="GameHOT">
                 <ul>
                     <c:forEach var="game" items="#{categoryController.games}">
                         <li>
                             <div class="GameHOT_box">
-                                <a href="#"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
+                                <a  href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
                                 <div class="GameHOT_box_text">
-                                    <a href="#">#{game.name}</a>
-                                    <p><a href="#">#{game.categoryName}</a></p>
+                                    <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}">#{game.name}</a>
+                                    <p>#{game.categoryName}</p>
                                 </div>
                             </div>
                         </li>
@@ -26,10 +26,11 @@
                     
                 </ul>
             </div>	
-            <div class="GameHOT_button">
-                <button class="GameHOT_button_form">
-                    XEM THÊM
-                </button>
+            <div class="SoTrang">
+                <c:forEach var="pagination" items="#{categoryController.paginations}">
+                    <a href="${request.contextPath}/chuyen-muc-#{categoryController.categoryCode}.html?p=#{pagination.value}" class="SoTrang_#{pagination.style}">#{pagination.label}</a>
+                </c:forEach>
+
             </div>
         
     </ui:define>

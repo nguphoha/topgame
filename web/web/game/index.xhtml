@@ -6,127 +6,53 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="content">
-        <div class="Main_left">
-            <div class="Title">
-                GAME HOT NHẤT
+        <div class="Pages_chitiet_link">
+            <a href="${request.contextPath}/trang-chu.html">Trang chủ</a>  /  
+            <a href="${request.contextPath}/chuyen-muc-#{gameController.game.categoryCode}.html">#{gameController.game.categoryName}</a>   
+            /  #{gameController.game.name}
+        </div>
+        <div class="Pages_chitiet_content">
+            <div class="Pages_chitiet_content_img">
+                <img src="${request.contextPath}/resources/images/top-game-chitietgame-img-1.png"/>
             </div>
-            <div class="GameHOT">
-                <ul>
-                    <c:forEach var="game" items="#{category.games}">
-                        <li>
-                            <div class="GameHOT_box">
-                                <a href="#"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
-                                <div class="GameHOT_box_text">
-                                    <a href="#">#{game.name}</a>
-                                    <p><a href="#">Vui nhộn</a></p>
-                                </div>
-                            </div>
-                        </li>
-                    </c:forEach>
-                    
-                </ul>
-            </div>	
-            <div class="GameHOT_button">
-                <button class="GameHOT_button_form">
-                    XEM THÊM
+            <div class="Pages_chitiet_content_text">
+                <p>#{gameController.game.name}</p>
+                <strong>Nhà cung cấp:</strong>#{gameController.game.author}<br />
+                <strong>Ngày phát hành:</strong> #{gameController.game.dateCreateString}<br /> 
+                <strong>Thể loại:</strong> #{gameController.game.categoryName}<br />
+                <strong>Lượt xem:</strong> #{gameController.game.viewCount} <br />
+                <strong>Giá:</strong> 2000<br />
+                <button class="Pages_chitiet_content_text_button">
+                    Đăng ký để tải
                 </button>
+                (bằng 3g Viettel)
             </div>
+            <div class="both"></div>
         </div>
-        <div class="Main_right">
-            <div class="TOPMIENPHI_title">
-                TOP MIỄN PHÍ
-            </div>
-            <div class="TOPMIENPHI_List">
-                <ul>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-1.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">1. Prehistoric Worm: Deep 
-                                Sea</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-2.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">2. A to B: Don't Touch 
-                                Anything</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-3.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">3. Dragon Fighters: 
-                                Dungeon Wars</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-4.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">4. My Sweet Farm</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-1.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">5. Indy Cat And Ball of 
-                                Fate: Match 3</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-3.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">6. Pig Wing Plus</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-2.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">7. Dragon Fighters: 
-                                Dungeon Wars</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                    <li>
-                        <div class="TOPMIENPHI_List_img">
-                            <a href="#"><img src="images/top-game-topmienphi-img-4.png"/></a>
-                        </div>
-                        <div class="TOPMIENPHI_List_text">
-                            <a href="#">8. My Sweet Farm</a>
-                            <p>First Touch</p>
-                        </div>
-                        <div class="both"></div>
-                    </li>
-                </ul>
-            </div>
+        <div class="Title">
+            MÔ TẢ:
         </div>
-        <div class="both"></div>
+        <div class="Page_chitiet_Mota">
+            #{gameController.game.description}
+        </div>
+        <div class="Title">
+            	LIÊN QUAN:
+            </div>
+        <div class="GameHOT">
+            <ul>
+                <c:forEach var="game" items="#{gameController.gamesRelative}">
+                    <li>
+                        <div class="GameHOT_box">
+                            <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}"><img src="${request.contextPath}/resources/images/top-game-hotgame-img-1.png"/></a>
+                            <div class="GameHOT_box_text">
+                                <a href="${request.contextPath}/chi-tiet-game-#{game.code}.html?id=#{game.id}">#{game.name}</a>
+                                <p><a href="${request.contextPath}/chuyen-muc-#{game.categoryCode}.html">#{game.categoryName}</a></p>
+                            </div>
+                        </div>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
     </ui:define>
 
 </ui:composition>

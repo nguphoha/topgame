@@ -9,7 +9,7 @@
     </url-mapping>
     
     <url-mapping id="chuyen-muc">
-        <pattern value="/chuyen-muc/#{/[a-zA-Z-]+/code}.html"/>
+        <pattern value="/chuyen-muc-#{/[a-zA-Z-]+/code}.html"/>
         <view-id value="#{categoryRouter.routing}" /> 
     </url-mapping>
     
@@ -21,6 +21,10 @@
     <url-mapping id="trang-chu">
         <pattern value="/"/>
         <view-id value="#{indexRouter.routing}" />
+    </url-mapping>              
+    <url-mapping id="chi-tiet-game">
+        <pattern value="/chi-tiet-game-#{/[a-zA-Z-]+/gameCode}.html"/>
+        <view-id value="#{gameRouter.routing}" />
     </url-mapping>              
     
     
