@@ -18,9 +18,14 @@ import java.util.Date;
 @Table(name = "game")
 public class Game {
 
-     public static int ALL = -1;
+    public static int ALL = -1;
     public static int INACTIVE = 0;
     public static int ACTIVE = 1;
+    
+    public static String GAME_HOT = "GAME_HOT";
+    public static String GAME_NEWEST = "GAME_NEWEST";
+    public static String GAME_MOST_VIEW = "GAME_MOST_VIEW";
+    public static String GAME_MOST_DOWNLOAD = "GAME_MOST_DOWNLOAD";
     
     public static final int HOT = 1;
     public static final int NO_HOT = 0;

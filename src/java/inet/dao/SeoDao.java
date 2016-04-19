@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,13 +42,18 @@ public class SeoDao extends AbstractDAO {
         };
     }
 
-    public Seo getByURL(String url) throws Exception {
+    public Seo getByURL(String url) {
         String sql = "select * from seo where url = ?";
         List params = new ArrayList();
         params.add(url);
-        List<Seo> seos = find(sql, params, rowMapper);
-        return seos.isEmpty() ? null : seos.get(0);
-
+        List<Seo> seos;
+        try {
+            seos = find(sql, params, rowMapper);
+            return seos.isEmpty() ? null : seos.get(0);
+        } catch (Exception ex) {
+            Logger.getLogger(SeoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

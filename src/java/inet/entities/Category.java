@@ -46,6 +46,8 @@ public class Category {
 
     @Column(name = "seo_description")
     String seoDescription;
+    
+    int totalGame;
 
     public int getId() {
         return id;
@@ -117,6 +119,14 @@ public class Category {
 
     public void setSeoDescription(String seo_description) {
         this.seoDescription = seo_description;
+    }
+
+    public int getTotalGame() {
+        return totalGame;
+    }
+
+    public void setTotalGame(int totalGame) {
+        this.totalGame = totalGame;
     }
 
     @Override

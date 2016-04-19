@@ -9,7 +9,7 @@
     </url-mapping>
     
     <url-mapping id="chuyen-muc">
-        <pattern value="/chuyen-muc-#{/[a-zA-Z-]+/code}.html"/>
+        <pattern value="/chuyen-muc-#{/[a-zA-Z-]+/categoryCode}.html"/>
         <view-id value="#{categoryRouter.routing}" /> 
     </url-mapping>
     
@@ -30,7 +30,7 @@
     
     <url-mapping id="dang-nhap">
         <pattern value="/dang-nhap.html"/>
-          <view-id value="#{loginRouter.routing}"/>
+         <view-id value="#{loginRouter.routing}"/>
     </url-mapping>
     
     <url-mapping id="expert-index">

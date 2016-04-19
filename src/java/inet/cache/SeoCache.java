@@ -10,6 +10,8 @@ import inet.entities.Seo;
 import java.util.HashMap;
 import java.util.Map;
 import inet.dao.SeoDao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,15 +21,19 @@ public class SeoCache extends Cache {
 
     private Map<String, Seo> datas = new HashMap<String, Seo>();
 
-    public Seo get(String url) throws Exception {
+    public Seo get(String url){
 
         Seo seo = datas.get(url);
         synchronized (datas) {
             if (seo == null) {
-                SeoDao seoDao = new SeoDao();
-                seo = seoDao.getByURL(url);
-                if (seo != null) {
-                    datas.put(url, seo);
+                try {
+                    SeoDao seoDao = new SeoDao();
+                    seo = seoDao.getByURL(url);
+                    if (seo != null) {
+                        datas.put(url, seo);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(SeoCache.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             return seo;

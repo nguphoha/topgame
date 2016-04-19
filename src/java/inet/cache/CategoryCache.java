@@ -22,19 +22,19 @@ import java.util.logging.Logger;
  */
 public class CategoryCache extends Cache {
 
-    private Map<String, Category> datas = new HashMap<String, Category>();
+    private Map<String, Category> categoryCache = new HashMap<String, Category>();
     //private Map<String,List<Category>> cacheCategories = new HashMap<String, List<Category>>();
     private List<Category> categories = new ArrayList();
     
     
     public Category getByCode(String code) {
-        Category seo = datas.get(code);
-        synchronized (datas) {
+        Category seo = categoryCache.get(code);
+        synchronized (categoryCache) {
             if (seo == null) {
                 try {
                     seo = CategoryDAO.getInstance().getByCode(code);
                     if (seo != null) {
-                        datas.put(code, seo);
+                        categoryCache.put(code, seo);
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(CategoryCache.class.getName()).log(Level.SEVERE, null, ex);
@@ -43,11 +43,37 @@ public class CategoryCache extends Cache {
             return seo;
         }
     }
+    public Category getById(int id) {
+        //String key = "categoryId_"+id;
+        Category category = categoryCache.get(id+"");
+        synchronized (categoryCache) {
+            if (category == null) {
+                try {
+                    category = CategoryDAO.getInstance().getById(id);
+                    if (category != null) {
+                        categoryCache.put(id+"", category);
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(CategoryCache.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return category;
+        }
+    }
 
+    
     public List<Category> getAll() {
         synchronized(categories){
             if(categories.isEmpty()){
                 categories = CategoryDAO.getInstance().find(Category.ACTIVE);
+                if(categories != null && !categories.isEmpty()){
+                    for(Category c : categories){
+                        if(!categoryCache.containsKey(c.getId()+""))
+                            categoryCache.put(c.getId()+"", c);
+                        if(!categoryCache.containsKey(c.getCode()))
+                            categoryCache.put(c.getCode(), c);
+                    }
+                }
             }
         }
         return categories;
@@ -56,7 +82,7 @@ public class CategoryCache extends Cache {
     @Override
     public void clearCache() {
         synchronized (this) {
-            datas.clear();
+            categoryCache.clear();
             categories.clear();
         }
     }

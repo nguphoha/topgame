@@ -6,14 +6,10 @@
 package inet.controller;
 
 import com.ocpsoft.pretty.PrettyContext;
-import inet.cache.CategoryCache;
-import inet.cache.SeoCache;
-import inet.cache.management.CacheFactory;
 import inet.entities.Category;
+import inet.entities.Game;
 import inet.entities.Seo;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -33,28 +29,69 @@ public class MasterPageController extends BaseController {
     
     private String requestUrl;
     
+    private String gameName;
+    private String osType;
+    
     /**
      * Creates a new instance of MasterPageBean
      */
     public MasterPageController() {
         super();
-        PrettyContext context = PrettyContext.getCurrentInstance();
-        String viewId = context.getCurrentMapping().getId();
-//        try {
-//            System.out.println("========viewId "+viewId);
-//            Seo seo  = ((SeoCache)CacheFactory.getCache("seo")).get(viewId +".html");
-//            if(seo != null){
-//                seoTitle = seo.getTitle();
-//                seoKeyword = seo.getKeyword();
-//                seoDescrption = seo.getDescription();
-//            }
-//        } catch (Exception ex) {
-//            Logger.getLogger(MasterPageController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         
-        categories = ((CategoryCache) CacheFactory.getCache("category")).getAll();
+        categories = categoryCache.getAll();
+        initSeoTags();
     }
 
+    private void initSeoTags(){
+        PrettyContext context = PrettyContext.getCurrentInstance();
+        String viewId = context.getCurrentMapping().getId();
+        if("chuyen-muc".equals(viewId)){
+            String categoryCode = getParameter("categoryCode");
+            if(categoryCode != null){
+                initSeoTags(categoryCache.getByCode(categoryCode));
+            }
+        }else if("chi-tiet-game".equals(viewId)){
+            try{
+                int gameId = Integer.valueOf(getParameter("id"));
+                initSeoTags(gameCache.findById(gameId));
+            }catch(Exception ex){}
+        }else if("game".equals(viewId)){
+            initSeoTags(seoCache.get("trang-chu"));
+        }else{
+            initSeoTags(seoCache.get(viewId));
+        }
+    }
+    
+    private void initSeoTags(Category category){
+        if(category == null)
+            return;
+        seoTitle = category.getSeoTitle();
+        seoKeyword = category.getSeoKeyword();
+        seoDescrption = category.getSeoDescription();
+    }
+    
+    private void initSeoTags(Game game){
+        if(game == null)
+            return;
+        seoTitle = game.getSeoTitle();
+        seoKeyword = game.getSeoKeyword();
+        seoDescrption = game.getSeoDescription();
+    }
+    private void initSeoTags(Seo seo){
+        if(seo == null)
+            return;
+        seoTitle = seo.getTitle();
+        seoKeyword = seo.getKeyword();
+        seoDescrption = seo.getDescription();
+    }
+    
+    //backing bean action
+    public void search(){
+        System.out.println("========================");
+        System.out.println("search action with game name = "+gameName +"|osType = "+osType);
+        System.out.println("========================");
+    }
+    
     public String getSeoTitle() {
         return seoTitle;
     }
@@ -93,6 +130,22 @@ public class MasterPageController extends BaseController {
 
     public void setRequestUrl(String requestUrl) {
         this.requestUrl = requestUrl;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getOsType() {
+        return osType;
+    }
+
+    public void setOsType(String osType) {
+        this.osType = osType;
     }
     
     

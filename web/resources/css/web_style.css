@@ -107,7 +107,7 @@ img{vertical-align:middle; border:0;}
 .Menu_Content{
 	position:absolute;
 	top:0;
-	left:350px;
+/*	left:350px;*/
 	margin:0 0 0 0;
 	text-align:left;
 }
@@ -359,13 +359,13 @@ img{vertical-align:middle; border:0;}
 	float:left;
 }
 .TOPMIENPHI_List_text{
-	margin-left:66px;
+/*	margin-left:66px;*/
 	text-align:left;
 	font-size:13px;
 	font-weight:bold;
 	color:#464646;
 }
-.TOPMIENPHI_List_text a{color:#464646;}
+.TOPMIENPHI_List_text a{color:#464646;text-transform: uppercase;}
 .TOPMIENPHI_List_text a:hover{color:#be273d;}
 .TOPMIENPHI_List_text p{
 	color:#969696;

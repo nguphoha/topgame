@@ -9,34 +9,105 @@ import inet.cache.management.Cache;
 import inet.dao.GameDAO;
 import inet.entities.Game;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author Admin
  */
-public class GameCache extends Cache{
-    private Map<String, Game> datas = new HashMap<String, Game>();
-    private Map<String, Integer> countGameCache = new HashMap<String,Integer>();
-    
-    public int countGameHot(){
-        Integer count = countGameCache.get("hot-nhat");
-        synchronized(countGameCache){
-            if(count == null){
-                count = (Integer) GameDAO.getInstance().countGameHot();
-                if(count != null){
-                    countGameCache.put("hot-nhat", count);
-                }else
-                    count = 0;
+public class GameCache extends Cache {
+
+    private Map<String, Game> hmGame = new HashMap<String, Game>();
+    private Map<String, List<Game>> hmGames = new HashMap<String, List<Game>>();
+
+    public List<Game> findByCategory(int catId, String os, int page, int pageSize) {
+        String key = buildKeyGames(catId, os, page, pageSize);
+        List<Game> games = hmGames.get(key);
+        synchronized (hmGames) {
+            if (games == null) {
+                games = GameDAO.getInstance().findByCategory(catId, os, page, pageSize);
+                if (games != null && !games.isEmpty()) {
+                    hmGames.put(key, games);
+                    String keyGame;
+                    for (Game g : games) {
+                        keyGame = buildKeyGame(g.getId());
+                        if (!hmGame.containsKey(keyGame)) {
+                            hmGame.put(keyGame, g);
+                        }
+                    }
+                }
             }
-            return count;
+            return games;
         }
     }
-    
+
+    public Game findById(int id) {
+        String key = buildKeyGame(id + "");
+        Game game = hmGame.get(key);
+        synchronized (hmGame) {
+            if (game == null) {
+                game = GameDAO.getInstance().findById(id);
+                if (game != null) {
+                    hmGame.put(key, game);
+                }
+            }
+            return game;
+        }
+    }
+
+    public List<Game> find(String typeView, int catId, int page, int pageSize) {
+        String key = typeView + buildKeyGames(catId, "", page, pageSize);
+        List<Game> games = hmGames.get(key);
+        synchronized (hmGames) {
+            if (games == null) {
+                games = loadGameFromDB(typeView, catId, page, pageSize);
+                if (games != null && !games.isEmpty()) {
+                    hmGames.put(key, games);
+                    String keyGame;
+                    for (Game g : games) {
+                        keyGame = buildKeyGame(g.getId());
+                        if (!hmGame.containsKey(keyGame)) {
+                            hmGame.put(keyGame, g);
+                        }
+                    }
+                }
+            }
+            return games;
+        }
+    }
+
+    private List<Game> loadGameFromDB(String typeView, int catId, int page, int pageSize) {
+        List<Game> games = null;
+        if (Game.GAME_HOT.equals(typeView)) {
+            games = GameDAO.getInstance().findGameHot(catId, page, pageSize);
+        }else if(Game.GAME_MOST_VIEW.equals(typeView)){
+            games = GameDAO.getInstance().findGameMostView(catId, page, pageSize);
+        }else if(Game.GAME_NEWEST.equals(typeView)){
+            games = GameDAO.getInstance().findGameNewest(catId, page, pageSize);
+        }else if(Game.GAME_MOST_DOWNLOAD.equals(typeView)){
+            games = GameDAO.getInstance().findGameMostDownload(catId, page, pageSize);
+        }
+        return games;
+    }
+
+    private String buildKeyGames(int catId, String os, int page, int pageSize) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("category").append(catId).append(os).append("_page_")
+                .append(page);
+        return sb.toString();
+    }
+
+    private String buildKeyGame(String id) {
+        StringBuilder sb = new StringBuilder();
+        return sb.append("game_id_").append(id).toString();
+    }
+
     @Override
     public void clearCache() {
         synchronized (this) {
-            countGameCache.clear();
+            hmGames.clear();
+            hmGames.clear();
         }
     }
 }

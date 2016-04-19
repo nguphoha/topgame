@@ -9,8 +9,9 @@
     <cc:interface>
         <cc:attribute name="title" />
         <cc:attribute name="games" required="true"/>
-        <cc:attribute name="linkMore" required="true"/>
+        <cc:attribute name="linkMore"/>
         <cc:attribute name="paginations"/>
+        <cc:attribute name="showPaging"/>
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
@@ -35,7 +36,7 @@
                 </ul>
             </div>
             <c:choose>
-                <c:when test="${empty param.typeView}">
+                <c:when test="${empty param.typeView and empty cc.attrs.showPaging}">
                     <div class="GameHOT_button">
                         <button class="GameHOT_button_form">
                             <a href="#{cc.attrs.linkMore}?action=view-more">XEM THÊM</a>
@@ -52,10 +53,7 @@
                 </c:otherwise>
                     
             </c:choose>
-            <c:if test="${empty param.typeView}">
-            </c:if>
-            <c:if test="${not empty param.typeView}">
-            </c:if>
+            
         </h:form>
     </cc:implementation>
 </html>

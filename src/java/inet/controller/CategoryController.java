@@ -6,7 +6,9 @@
 package inet.controller;
 
 import inet.cache.CategoryCache;
+import inet.cache.GameCache;
 import inet.cache.management.CacheFactory;
+import inet.common.log.Logger;
 import inet.dao.GameDAO;
 import inet.entities.Category;
 import inet.entities.Game;
@@ -30,10 +32,14 @@ public class CategoryController extends BaseController{
     
     private List<Game> games = new ArrayList();
     
+    
+    private Logger logger = new Logger("console");
+    
     /**
      * Creates a new instance of CategoryController
      */
     public CategoryController() {
+        super();
         osType = getParameter("os");
         if(osType == null)
             osType = "android";
@@ -41,7 +47,7 @@ public class CategoryController extends BaseController{
             catId = Integer.valueOf(getParameter("catId"));
         }catch(Exception e){}
         
-        categoryCode = getParameter("code");
+        categoryCode = getParameter("categoryCode");
         if(getParameter("p") != null){
             try{
                 setCurentPage(Integer.valueOf(getParameter("p")));
@@ -52,17 +58,18 @@ public class CategoryController extends BaseController{
     }
 
     private void initData(){
-        CategoryCache cache = (CategoryCache)CacheFactory.getCache("category");
-        if(cache != null){
-            Category category = cache.getByCode(categoryCode);
-            if(category != null){
-                System.out.println("====osType ="+osType+"|catId = "+category.getId());
-                categoryName = category.getName();
-                games = GameDAO.getInstance().findByCategory(category.getId(), osType, getCurentPage(), getPageSize());
-                int count = GameDAO.getInstance().countGameByCategory(category.getId(), osType);
-                pagination(count);
-            }
+        
+        Category category = categoryCache.getByCode(categoryCode);
+        if(category == null){
+            logger.info("Get list category null ==> return");
+            return;
         }
+        //System.out.println("====osType ="+osType+"|catId = "+category.getId());
+        categoryName = category.getName();
+        games = gameCache.findByCategory(category.getId(), osType, getCurentPage(), getPageSize());
+        int count = GameDAO.getInstance().countGameByCategory(category.getId(), osType);
+        pagination(count);
+        
     }
     
     public String getOsType() {

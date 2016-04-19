@@ -5,6 +5,10 @@
 package inet.controller;
 
 import com.ocpsoft.pretty.PrettyContext;
+import inet.cache.CategoryCache;
+import inet.cache.GameCache;
+import inet.cache.SeoCache;
+import inet.cache.management.CacheFactory;
 import inet.common.log.Logger;
 import inet.constant.Constant;
 import inet.entities.Pagination;
@@ -34,6 +38,9 @@ public class BaseController implements Serializable {
     private static Logger console = new Logger("console");
     private static Logger error = new Logger("error");
     public boolean isMobile = false;
+    protected GameCache gameCache;
+    protected CategoryCache categoryCache;
+    protected SeoCache seoCache;
 
     static {
         error.setDebug(true);
@@ -42,6 +49,9 @@ public class BaseController implements Serializable {
 
     public BaseController() {
         isMobile = getUserAgentInfo().isMobilePhone;
+        gameCache = (GameCache)CacheFactory.getCache("game");
+        categoryCache = (CategoryCache)CacheFactory.getCache("category");
+        seoCache = (SeoCache)CacheFactory.getCache("seo");
     }
 
     private UserAgent getUserAgentInfo() {

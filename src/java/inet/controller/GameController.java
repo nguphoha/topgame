@@ -41,10 +41,10 @@ public class GameController extends BaseController{
         if(gameId == null)
             return;
         
-        game = GameDAO.getInstance().findById(Integer.valueOf(gameId));
+        game = gameCache.findById(Integer.valueOf(gameId));
         if(game == null)
             return;
-        gamesRelative = GameDAO.getInstance().findByCategory(Integer.valueOf(game.getCategoryId()), "", getCurentPage(), getPageSize());
+        gamesRelative = gameCache.findByCategory(Integer.valueOf(game.getCategoryId()), "", getCurentPage(), getPageSize());
     }
 
     public String getGameCode() {

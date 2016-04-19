@@ -5,6 +5,8 @@
  */
 package inet.controller;
 
+import inet.cache.GameCache;
+import inet.cache.management.CacheFactory;
 import inet.constant.Constant;
 import inet.dao.GameDAO;
 import inet.entities.Game;
@@ -32,7 +34,7 @@ public class HomeController extends BaseController{
     private int countGameMostDownload = 0;
     private int countGameNewest = 0;    
     
-    private int categoryId = 0;
+    private int categoryId = 0;    
     
     private boolean isShowPaging = false;
     /**
@@ -58,7 +60,7 @@ public class HomeController extends BaseController{
     
     public List<Game> getGamesNewest() {
         if(gamesNewest.isEmpty()){
-            gamesNewest = GameDAO.getInstance().findGameNewest(categoryId, getCurentPage(), getPageSize());
+            gamesNewest = gameCache.find(Game.GAME_NEWEST,categoryId, getCurentPage(), getPageSize());
             if(isShowPaging){
                 int count = GameDAO.getInstance().countGame();
                 pagination(count);
@@ -73,7 +75,7 @@ public class HomeController extends BaseController{
 
     public List<Game> getGamesMostView() {
         if(gamesMostView.isEmpty()){
-            gamesMostView = GameDAO.getInstance().findGameMostView(categoryId,getCurentPage(), getPageSize());
+            gamesMostView = gameCache.find(Game.GAME_MOST_VIEW,categoryId,getCurentPage(), getPageSize());
             if(isShowPaging){
                 int count = GameDAO.getInstance().countGame();
                 pagination(count);
@@ -88,7 +90,7 @@ public class HomeController extends BaseController{
 
     public List<Game> getGamesMostDownload() {
         if(gamesMostDownload.isEmpty()){
-            gamesMostDownload = GameDAO.getInstance().findGameMostDownload(categoryId,getCurentPage(), getPageSize());
+            gamesMostDownload = gameCache.find(Game.GAME_MOST_DOWNLOAD,categoryId,getCurentPage(), getPageSize());
             if(isShowPaging){
                 int count = GameDAO.getInstance().countGame();
                 pagination(count);
@@ -103,7 +105,7 @@ public class HomeController extends BaseController{
 
     public List<Game> getGamesHOT() {
         if(gamesHOT.isEmpty()){ 
-            gamesHOT = GameDAO.getInstance().findGameHot(categoryId, getCurentPage(), getPageSize());
+            gamesHOT = gameCache.find(Game.GAME_HOT,categoryId, getCurentPage(), getPageSize());
             if(isShowPaging){
                 int count = GameDAO.getInstance().countGameHot();
                 pagination(count);
