@@ -7,8 +7,11 @@ package inet.entities;
 
 import inet.common.database.annotation.Column;
 import inet.common.database.annotation.Table;
+import inet.dao.AccountDao;
+import inet.util.Constants;
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -16,6 +19,15 @@ import java.util.List;
  */
 @Table(name = "account")
 public class Account {
+
+    public static final String PENDING = "0";
+    public static final String ACTIVE = "1";
+    public static final String CANCEL = "-1";
+
+    public static final String CHANNEL_WAP = "WAP";
+    public static final String CHANNEL_SMS = "SMS";
+
+    public static final Object sync = new Object();
 
     @Column(name = "id", PK = true)
     String id;
@@ -32,10 +44,25 @@ public class Account {
     @Column(name = "date_create")
     Timestamp dateCreate;
 
-    @Column(name = "key")
+    @Column(name = "aes_key")
     String key;
 
-    List<AccountService> services;
+    Map<String, AccountService> services = new HashMap<String, AccountService>();
+
+    public Account insert() throws Exception {
+        synchronized (sync) {
+            AccountDao dao = new AccountDao();
+            this.id = dao.getSequenceValue("account", Constants.DATABASE);
+            dao.insert(this);
+        }
+        return this;
+    }
+
+    public Account update() throws Exception {
+        AccountDao dao = new AccountDao();
+        dao.update(this);
+        return this;
+    }
 
     public String getId() {
         return id;
@@ -85,12 +112,19 @@ public class Account {
         this.key = key;
     }
 
-    public List<AccountService> getServices() {
+    public Map<String, AccountService> getServices() {
         return services;
     }
 
-    public void setServices(List<AccountService> services) {
+    public void setServices(Map<String, AccountService> services) {
         this.services = services;
     }
 
+    public void putService(String key, AccountService value) {
+        services.put(key, value);
+    }
+
+    public AccountService getService(String key) {
+        return services.get(key);
+    }
 }

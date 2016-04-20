@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inet.entities;
+package vas.entities;
 
-import inet.common.database.annotation.Column;
-import inet.common.database.annotation.Table;
+import vas.common.database.annotation.Column;
+import vas.common.database.annotation.Table;
 import java.sql.Timestamp;
+import vas.dao.AccountLogDao;
 
 /**
  *
@@ -16,6 +17,8 @@ import java.sql.Timestamp;
 @Table(name = "account_log")
 public class AccountLog {
 
+    public static final String SUCCESS = "0";
+    public static final String FAIL = "1";
     public static final String TYPE_REGISTER = "REGISTER";
     public static final String TYPE_MONFEE = "MONFEE";
     public static final String TYPE_CANCEL = "CANCEL";
@@ -49,6 +52,11 @@ public class AccountLog {
 
     @Column(name = "date_create")
     Timestamp dateCreate;
+
+    public void insert() throws Exception {
+        AccountLogDao dao = new AccountLogDao();
+        dao.insert(this);
+    }
 
     public String getId() {
         return id;

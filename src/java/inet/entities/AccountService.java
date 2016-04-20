@@ -7,6 +7,7 @@ package inet.entities;
 
 import inet.common.database.annotation.Column;
 import inet.common.database.annotation.Table;
+import inet.dao.AccountServiceDao;
 import java.sql.Timestamp;
 
 /**
@@ -34,11 +35,17 @@ public class AccountService {
     @Column(name = "date_create")
     Timestamp dateCreate;
 
+    @Column(name = "date_latest_create")
+    Timestamp dateLatestCreate;
+
     @Column(name = "date_renew")
     Timestamp dateRenew;
 
     @Column(name = "date_cancel")
     Timestamp dateCancel;
+
+    @Column(name = "date_expire")
+    Timestamp dateExpire;
 
     @Column(name = "partner")
     String partner;
@@ -51,6 +58,24 @@ public class AccountService {
 
     @Column(name = "properties")
     String properties;
+
+    @Column(name = "channel")
+    private String channel;
+
+    @Column(name = "charge_sequence")
+    private int chargeSequence;
+
+    public AccountService insert() throws Exception {
+        AccountServiceDao dao = new AccountServiceDao();
+        dao.insert(this);
+        return this;
+    }
+
+    public AccountService update() throws Exception {
+        AccountServiceDao dao = new AccountServiceDao();
+        dao.update(this);
+        return this;
+    }
 
     public String getId() {
         return id;
@@ -146,6 +171,38 @@ public class AccountService {
 
     public void setProperties(String properties) {
         this.properties = properties;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public Timestamp getDateExpire() {
+        return dateExpire;
+    }
+
+    public void setDateExpire(Timestamp dateExpire) {
+        this.dateExpire = dateExpire;
+    }
+
+    public Timestamp getDateLatestCreate() {
+        return dateLatestCreate;
+    }
+
+    public void setDateLatestCreate(Timestamp dateLatestCreate) {
+        this.dateLatestCreate = dateLatestCreate;
+    }
+
+    public int getChargeSequence() {
+        return chargeSequence;
+    }
+
+    public void setChargeSequence(int chargeSequence) {
+        this.chargeSequence = chargeSequence;
     }
 
 }

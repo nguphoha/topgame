@@ -11,16 +11,13 @@ package inet.util;
  */
 public class Constants {
 
-     public static final String DANH_GIA_CAO_NHAT = "1";
-    public static final String TU_VAN_NHIEU_NHAT = "2";
-
-    public static boolean isRunning = false;
-
-    public static final String ANTHENTICATION_TYPE = "AUTHENTICATION_TYPE";
-    public static final String URL_BACK_LINK = "URL_BACK_LINK";
-    public static final String FACEBOOK = "FACEBOOK";
-    public static final String GOOGLE = "GOOGLE";
-    public static final String INET = "INET";
     public static final String ACCOUNT = "ACCOUNT";
+    public static final String ADMIN = "ADMIN";
+    public static final String IS_MOBILE_REDIRECT = "IS_MOBILE_REDIRECT";
+    public static final String MOBILE = "MOBILE";
+    public static final String COMMAND = "COMMAND";
 
+    public static boolean isRunning = true;
+
+    public static final String DATABASE = "topgame";
 }
