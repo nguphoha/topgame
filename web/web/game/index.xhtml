@@ -22,10 +22,18 @@
                 <strong>Thể loại:</strong> #{gameController.game.categoryName}<br />
                 <strong>Lượt xem:</strong> #{gameController.game.viewCount} <br />
                 <strong>Giá:</strong> 2000<br />
-                <button class="Pages_chitiet_content_text_button">
-                    Đăng ký để tải
-                </button>
-                (bằng 3g Viettel)
+                <c:choose>
+                    <c:when test="${not empty sessionScope.ACCOUNT}">
+                        <h:commandButton value="Tải game" styleClass="Pages_chitiet_content_text_button"
+                                         actionListener="#{gameController.processDownloadGame(gameController.downloadUrl)}"/>
+                    </c:when>
+                    <c:otherwise>                        
+                        <button class="Pages_chitiet_content_text_button">
+                            Đăng ký để tải
+                        </button>
+                        (bằng 3g Viettel)
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div class="both"></div>
         </div>

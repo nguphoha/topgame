@@ -5,6 +5,13 @@
  */
 package inet.controller;
 
+import inet.cache.AccountCache;
+import inet.cache.management.CacheFactory;
+import inet.dao.AccountDao;
+import inet.entities.Account;
+import inet.util.Constants;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -16,7 +23,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class LoginController extends BaseController{
 
-    private String username, password;
+    private String mobile, password, message;
     
     /**
      * Creates a new instance of LoginController
@@ -25,9 +32,20 @@ public class LoginController extends BaseController{
     }
 
     public void login(){
-        System.out.println("==========================");
-        System.out.println("log in action");
-        System.out.println("==========================");
+        try {
+            
+            AccountDao accDao = new AccountDao();
+            Account account = accDao.login(mobile, password);
+            if(account != null){
+                setSessionValue(Constants.ACCOUNT, account);
+                setSessionValue(Constants.MOBILE, account.getMobile());
+                redirect(getContextPath() + "/trang-ca-nhan.html");
+            }else{
+                message = "Sai mật khẩu hoặc số điện thoại chưa đăng ký";
+            }
+        } catch (Exception ex) {
+            logToError("login with mobile "+ mobile + " password "+ password +" error " + ex.getMessage());
+        }
     }
     
     public void register(){
@@ -37,11 +55,11 @@ public class LoginController extends BaseController{
     }
     
     public String getUsername() {
-        return username;
+        return mobile;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.mobile = username;
     }
 
     public String getPassword() {
@@ -50,6 +68,14 @@ public class LoginController extends BaseController{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
     
 }

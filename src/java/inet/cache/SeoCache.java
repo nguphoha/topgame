@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import inet.dao.SeoDao;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +19,7 @@ import java.util.logging.Logger;
 public class SeoCache extends Cache {
 
     private Map<String, Seo> datas = new HashMap<String, Seo>();
+    private inet.common.log.Logger error = new inet.common.log.Logger("error");
 
     public Seo get(String url){
 
@@ -33,7 +33,7 @@ public class SeoCache extends Cache {
                         datas.put(url, seo);
                     }
                 } catch (Exception ex) {
-                    Logger.getLogger(SeoCache.class.getName()).log(Level.SEVERE, null, ex);
+                    error.info("get seo by url error: " +ex.getMessage());
                 }
             }
             return seo;

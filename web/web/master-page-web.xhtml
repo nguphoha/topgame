@@ -41,6 +41,7 @@
                                 <img src="${resourceImage}/top-game-logo.png"/>
                             </a>
                         </div>
+                        
                         <select name="Danhmuc" class="Header_Danhmuc">
                             <option>CHỌN DANH MỤC</option>
                             <option>ANDROID</option>
@@ -70,9 +71,19 @@
                         </div>
                         <div class="Menu_Khach">
                             <img src="${resourceImage}/top-game-icon-user.png" style="padding:0 5px 3px 0;"/>
-                            <a href="${request.contextPath}/dang-nhap.html">
-                                Xin chào! Khách... 
-                            </a>
+                            <c:choose>
+                                <c:when test="${not empty sessionScope.ACCOUNT}">
+                                    <a href="${request.contextPath}/trang-ca-nhan.html">
+                                        ${sessionScope.MOBILE}
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="${request.contextPath}/dang-nhap.html">
+                                        Xin chào! Khách... 
+                                    </a>
+                                    
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div><!-- End Menu -->

@@ -32,6 +32,14 @@
         <pattern value="/dang-nhap.html"/>
          <view-id value="#{loginRouter.routing}"/>
     </url-mapping>
+    <url-mapping id="trang-ca-nhan">
+        <pattern value="/trang-ca-nhan.html"/>
+         <view-id value="#{profileRouter.routing}"/>
+    </url-mapping>
+    <url-mapping id="ket-qua-tim-kiem">
+        <pattern value="/ket-qua-tim-kiem.html"/>
+         <view-id value="#{searchRouter.routing}"/>
+    </url-mapping>
     
     <url-mapping id="expert-index">
         <pattern value="/chuyen-gia-tu-van/#{/[a-zA-Z-]+/code:expertRouter.code}.html"/>

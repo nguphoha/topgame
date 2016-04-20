@@ -25,12 +25,21 @@
                     
                 </div>
                 <div class="both"></div>
-                <div class="PageChitiet_button">
-                	<button class="Pages_chitiet_content_text_button">
-                        Đăng ký để tải 
-                    </button>
-                    (bằng 3g Viettel)
-                </div>
+                <h:form>                    
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.ACCOUNT}">
+                            <h:commandButton value="Tải game" styleClass="PageChitiet_button"
+                                             actionListener="#{gameController.processDownloadGame(gameController.downloadUrl)}"/>
+                        </c:when>
+                        <c:otherwise>                        
+                            <button class="PageChitiet_button">
+                                Đăng ký để tải
+                            </button>
+                            (bằng 3g Viettel)
+                        </c:otherwise>
+                    </c:choose>
+                </h:form>
+                
             </div>
         </div><!-- End Pages_chitiet_link -->
         

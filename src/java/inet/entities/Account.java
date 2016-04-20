@@ -9,7 +9,9 @@ import inet.common.database.annotation.Column;
 import inet.common.database.annotation.Table;
 import inet.dao.AccountDao;
 import inet.util.Constants;
+import inet.util.StringUtil;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,6 +100,9 @@ public class Account {
 
     public Timestamp getDateCreate() {
         return dateCreate;
+    }
+    public String getDateCreateString() {
+        return dateCreate== null ? "" : StringUtil.format(new Date(dateCreate.getTime()), "dd/MM/yyyy");
     }
 
     public void setDateCreate(Timestamp dateCreate) {

@@ -4,7 +4,6 @@
  */
 package inet.controller;
 
-import com.ocpsoft.pretty.PrettyContext;
 import inet.cache.CategoryCache;
 import inet.cache.GameCache;
 import inet.cache.SeoCache;
@@ -32,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BaseController implements Serializable {
 
-    protected int curentPage = 1;
+    protected int currentPage = 1;
     protected List<Pagination> paginations;
     protected int pageSize = Constant.PAGE_SIZE;
     private static Logger console = new Logger("console");
@@ -81,11 +80,11 @@ public class BaseController implements Serializable {
         }
 
         int i = 1;
-        if (curentPage == 1 || curentPage == 2 || curentPage == 3) {
+        if (currentPage == 1 || currentPage == 2 || currentPage == 3) {
             i = 1;
         } else {
-            i = curentPage - 2;
-            display = curentPage + 2;
+            i = currentPage - 2;
+            display = currentPage + 2;
         }
 
         if (display > soTrang) {
@@ -100,7 +99,7 @@ public class BaseController implements Serializable {
         pagination.setValue(1);
         pagination.setRender(true);
 
-        if (curentPage > 1) {
+        if (currentPage > 1) {
             pagination.setDisable(false);
         } else {
             pagination.setDisable(true);
@@ -112,10 +111,10 @@ public class BaseController implements Serializable {
         // add previous page
         pagination = new Pagination();
         pagination.setLabel("<");
-        pagination.setValue(curentPage - 1);
+        pagination.setValue(currentPage - 1);
         pagination.setRender(true);
 
-        if (curentPage > 1) {
+        if (currentPage > 1) {
             pagination.setDisable(false);
         } else {
             pagination.setDisable(true);
@@ -131,7 +130,7 @@ public class BaseController implements Serializable {
             pagination.setRender(true);
             pagination.setValue(i);
             pagination.setLabel(String.valueOf(i));
-            if (i == curentPage) {
+            if (i == currentPage) {
                 pagination.setStyle("active");
                 pagination.setDisable(true);
             } else {
@@ -144,10 +143,10 @@ public class BaseController implements Serializable {
         // add next page
         pagination = new Pagination();
         pagination.setLabel(">");
-        pagination.setValue(curentPage + 1);
+        pagination.setValue(currentPage + 1);
         pagination.setRender(true);
 //
-        if (curentPage == soTrang || soTrang == 0) {
+        if (currentPage == soTrang || soTrang == 0) {
             pagination.setDisable(true);
         } else {
             pagination.setDisable(false);
@@ -161,7 +160,7 @@ public class BaseController implements Serializable {
         pagination.setValue(soTrang);
         pagination.setRender(true);
 
-        if (curentPage == soTrang || soTrang == 0) {
+        if (currentPage == soTrang || soTrang == 0) {
             pagination.setDisable(true);
         } else {
             pagination.setDisable(false);
@@ -271,12 +270,12 @@ public class BaseController implements Serializable {
         return getExternalContext().getMimeType(filePath);
     }
 
-    public int getCurentPage() {
-        return curentPage;
+    public int getCurrentPage() {
+        return currentPage;
     }
 
-    public void setCurentPage(int curentPage) {
-        this.curentPage = curentPage;
+    public void setCurrentPage(int curentPage) {
+        this.currentPage = curentPage;
     }
 
     public List<Pagination> getPaginations() {

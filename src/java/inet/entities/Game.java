@@ -75,6 +75,9 @@ public class Game {
     @Column(name = "hot")
     int hot;
     
+    @Column(name = "download_url")
+    String downloadUrl;
+    
     String categoryName;
     String categoryCode;
 
@@ -216,6 +219,14 @@ public class Game {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
     
     @Override

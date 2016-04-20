@@ -21,7 +21,7 @@ public class GameCache extends Cache {
     private Map<String, Game> hmGame = new HashMap<String, Game>();
     private Map<String, List<Game>> hmGames = new HashMap<String, List<Game>>();
 
-    public List<Game> findByCategory(int catId, String os, int page, int pageSize) {
+    public List<Game> findByCategory(int catId, String os, int page, int pageSize) throws Exception {
         String key = buildKeyGames(catId, os, page, pageSize);
         List<Game> games = hmGames.get(key);
         synchronized (hmGames) {
@@ -42,7 +42,7 @@ public class GameCache extends Cache {
         }
     }
 
-    public Game findById(int id) {
+    public Game findById(int id) throws Exception {
         String key = buildKeyGame(id + "");
         Game game = hmGame.get(key);
         synchronized (hmGame) {
@@ -56,7 +56,21 @@ public class GameCache extends Cache {
         }
     }
 
-    public List<Game> find(String typeView, int catId, int page, int pageSize) {
+    public List<Game> findDownloadHistory(int accountId,int page, int pageSize)  throws Exception {
+        String key = buildKeyGamesDownload(accountId, page);
+        List<Game> games = hmGames.get(key);
+        synchronized (hmGames) {
+            if (games == null) {
+                games = GameDAO.getInstance().findDownloadHistory(accountId, page, pageSize);
+                if (games != null && !games.isEmpty()) {
+                    hmGames.put(key, games);
+                }
+            }
+            return games;
+        }
+    }
+    
+    public List<Game> find(String typeView, int catId, int page, int pageSize) throws Exception {
         String key = typeView + buildKeyGames(catId, "", page, pageSize);
         List<Game> games = hmGames.get(key);
         synchronized (hmGames) {
@@ -77,7 +91,7 @@ public class GameCache extends Cache {
         }
     }
 
-    private List<Game> loadGameFromDB(String typeView, int catId, int page, int pageSize) {
+    private List<Game> loadGameFromDB(String typeView, int catId, int page, int pageSize) throws Exception {
         List<Game> games = null;
         if (Game.GAME_HOT.equals(typeView)) {
             games = GameDAO.getInstance().findGameHot(catId, page, pageSize);
@@ -97,6 +111,12 @@ public class GameCache extends Cache {
                 .append(page);
         return sb.toString();
     }
+    private String buildKeyGamesDownload(int accountId, int page) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("download").append(accountId).append("_page_")
+                .append(page);
+        return sb.toString();
+    }
 
     private String buildKeyGame(String id) {
         StringBuilder sb = new StringBuilder();
@@ -107,7 +127,7 @@ public class GameCache extends Cache {
     public void clearCache() {
         synchronized (this) {
             hmGames.clear();
-            hmGames.clear();
+            hmGame.clear();
         }
     }
 }

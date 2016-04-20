@@ -9,7 +9,10 @@ import com.ocpsoft.pretty.PrettyContext;
 import inet.entities.Category;
 import inet.entities.Game;
 import inet.entities.Seo;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -90,6 +93,11 @@ public class MasterPageController extends BaseController {
         System.out.println("========================");
         System.out.println("search action with game name = "+gameName +"|osType = "+osType);
         System.out.println("========================");
+        try {
+            redirect(getContextPath()+"/ket-qua-tim-kiem.html?name="+gameName+"&osType="+osType);
+        } catch (IOException ex) {
+            logToError("send redirect to search result controller error: "+ ex.getMessage());
+        }
     }
     
     public String getSeoTitle() {

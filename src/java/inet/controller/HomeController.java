@@ -13,6 +13,8 @@ import inet.entities.Game;
 import inet.entities.Pagination;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -53,17 +55,23 @@ public class HomeController extends BaseController{
 //        System.out.println("=========="+ getParameter("typeView"));
         if(getParameter("p") != null){
             try{
-                setCurentPage(Integer.valueOf(getParameter("p")));
-            }catch(Exception e){}
+                setCurrentPage(Integer.valueOf(getParameter("p")));
+            }catch(Exception e){
+                logToError("init home controller error: "+ e.getMessage());
+            }
         }        
     }
     
     public List<Game> getGamesNewest() {
         if(gamesNewest.isEmpty()){
-            gamesNewest = gameCache.find(Game.GAME_NEWEST,categoryId, getCurentPage(), getPageSize());
-            if(isShowPaging){
-                int count = GameDAO.getInstance().countGame();
-                pagination(count);
+            try {
+                gamesNewest = gameCache.find(Game.GAME_NEWEST,categoryId, getCurrentPage(), getPageSize());
+                if(isShowPaging){
+                    int count = GameDAO.getInstance().countGame();
+                    pagination(count);
+                }
+            } catch (Exception ex) {
+                logToError("Get list game newest error: "+ex.getMessage());
             }
         }
         return gamesNewest;
@@ -75,10 +83,14 @@ public class HomeController extends BaseController{
 
     public List<Game> getGamesMostView() {
         if(gamesMostView.isEmpty()){
-            gamesMostView = gameCache.find(Game.GAME_MOST_VIEW,categoryId,getCurentPage(), getPageSize());
-            if(isShowPaging){
-                int count = GameDAO.getInstance().countGame();
-                pagination(count);
+            try {
+                gamesMostView = gameCache.find(Game.GAME_MOST_VIEW,categoryId,getCurrentPage(), getPageSize());
+                if(isShowPaging){
+                    int count = GameDAO.getInstance().countGame();
+                    pagination(count);
+                }
+            } catch (Exception ex) {
+                logToError("Get list game most view error: "+ex.getMessage());
             }
         }
         return gamesMostView;
@@ -90,10 +102,14 @@ public class HomeController extends BaseController{
 
     public List<Game> getGamesMostDownload() {
         if(gamesMostDownload.isEmpty()){
-            gamesMostDownload = gameCache.find(Game.GAME_MOST_DOWNLOAD,categoryId,getCurentPage(), getPageSize());
-            if(isShowPaging){
-                int count = GameDAO.getInstance().countGame();
-                pagination(count);
+            try {
+                gamesMostDownload = gameCache.find(Game.GAME_MOST_DOWNLOAD,categoryId,getCurrentPage(), getPageSize());
+                if(isShowPaging){
+                    int count = GameDAO.getInstance().countGame();
+                    pagination(count);
+                }
+            } catch (Exception ex) {
+               logToError("Get list game most download error: "+ex.getMessage());
             }
         }
         return gamesMostDownload;
@@ -105,10 +121,14 @@ public class HomeController extends BaseController{
 
     public List<Game> getGamesHOT() {
         if(gamesHOT.isEmpty()){ 
-            gamesHOT = gameCache.find(Game.GAME_HOT,categoryId, getCurentPage(), getPageSize());
-            if(isShowPaging){
-                int count = GameDAO.getInstance().countGameHot();
-                pagination(count);
+            try {
+                gamesHOT = gameCache.find(Game.GAME_HOT,categoryId, getCurrentPage(), getPageSize());
+                if(isShowPaging){
+                    int count = GameDAO.getInstance().countGameHot();
+                    pagination(count);
+                }
+            } catch (Exception ex) {
+                logToError("Get list game HOT error: "+ex.getMessage());
             }
         }
         return gamesHOT;

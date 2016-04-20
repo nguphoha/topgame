@@ -14,6 +14,7 @@ import inet.entities.Category;
 import inet.entities.Game;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -50,7 +51,7 @@ public class CategoryController extends BaseController{
         categoryCode = getParameter("categoryCode");
         if(getParameter("p") != null){
             try{
-                setCurentPage(Integer.valueOf(getParameter("p")));
+                setCurrentPage(Integer.valueOf(getParameter("p")));
             }catch(Exception e){}
         }
         
@@ -66,9 +67,13 @@ public class CategoryController extends BaseController{
         }
         //System.out.println("====osType ="+osType+"|catId = "+category.getId());
         categoryName = category.getName();
-        games = gameCache.findByCategory(category.getId(), osType, getCurentPage(), getPageSize());
-        int count = GameDAO.getInstance().countGameByCategory(category.getId(), osType);
-        pagination(count);
+        try {
+            games = gameCache.findByCategory(category.getId(), osType, getCurrentPage(), getPageSize());
+            int count = GameDAO.getInstance().countGameByCategory(category.getId(), osType);
+            pagination(count);
+        } catch (Exception ex) {
+            logToError("Get list game by category error: "+ex.getMessage());
+        }
         
     }
     

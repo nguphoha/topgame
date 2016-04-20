@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vas.entities;
+package inet.entities;
 
-import vas.common.database.annotation.Column;
-import vas.common.database.annotation.Table;
+import inet.common.database.annotation.Column;
+import inet.common.database.annotation.Table;
 import java.sql.Timestamp;
-import vas.dao.AccountLogDao;
+import inet.dao.AccountLogDao;
 
 /**
  *

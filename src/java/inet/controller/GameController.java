@@ -5,10 +5,14 @@
  */
 package inet.controller;
 
-import inet.dao.GameDAO;
+import inet.entities.Account;
 import inet.entities.Game;
+import inet.util.Constants;
+import inet.util.Encrypter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -41,12 +45,57 @@ public class GameController extends BaseController{
         if(gameId == null)
             return;
         
-        game = gameCache.findById(Integer.valueOf(gameId));
+        try {
+            game = gameCache.findById(Integer.valueOf(gameId));
+        } catch (Exception ex) {
+            logToError("Find game by id " + gameId + " error "+ex.getMessage());
+        }
         if(game == null)
             return;
-        gamesRelative = gameCache.findByCategory(Integer.valueOf(game.getCategoryId()), "", getCurentPage(), getPageSize());
+        try {
+            gamesRelative = gameCache.findByCategory(Integer.valueOf(game.getCategoryId()), "", getCurrentPage(), getPageSize());
+        } catch (Exception ex) {
+            logToError("Find list game relate game id " + gameId + " error "+ex.getMessage());
+        }
     }
 
+    public void register(){
+        System.out.println("================");
+        System.out.println("register to download game");
+        System.out.println("================");
+    }
+    
+    public void processDownloadGame(String encodeUrl){
+        try {
+            Account account = (Account) getSessionValue(Constants.ACCOUNT);
+            if(account == null)
+                return;
+            
+            System.out.println("================");
+            System.out.println("processDownloadGame encodeUrl "+encodeUrl);
+            System.out.println("processDownloadGame origin url  "+Encrypter.decrypt(encodeUrl, account.getKey()));
+            System.out.println("================");
+        } catch (Exception ex) {
+            logToError("Decrypt url "+encodeUrl +" with key error "+ex.getMessage());
+        }
+    }
+    
+    public String getDownloadUrl(){
+        if(game == null)
+            return "";
+        
+        Account account = (Account) getSessionValue(Constants.ACCOUNT);
+        if(account == null)
+            return "";
+        
+        try {
+            return Encrypter.encrypt(game.getDownloadUrl(), account.getKey());
+        } catch (Exception ex) {
+            logToError("Encrypt url "+game.getDownloadUrl() +" with key "+account.getKey() +" error "+ex.getMessage());
+            return "";
+        }
+    }
+    
     public String getGameCode() {
         return gameCode;
     }

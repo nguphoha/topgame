@@ -137,7 +137,16 @@
                 </div><!-- End Menu -->
                 <div class="Main">
                     <div class="THONGBAO">
-                        Quý khách đang truy cập bằng wifi, vui lòng <a href="#" class="red">đăng nhập</a> tại đây hoặc vui lòng chuyển sang truy cập bằng GPRS/3G/EDGE của Mobifone
+                        <c:choose>
+                            <!-- TH Không nhận diện được thuê bao-->
+                            <c:when test="${empty sessionScope.ACCOUNT and empty sessionScope.MOBILE}">
+                                Quý khách đang truy cập bằng wifi, vui lòng 
+                                <a href="${request.contextPath}/dang-nhap.html" class="red">đăng nhập</a> tại đây hoặc vui lòng chuyển sang truy cập bằng GPRS/3G/EDGE của Viettel
+                            </c:when>
+                            <c:otherwise>
+                                <a href="${request.contextPath}/trang-ca-nhan.html" class="red">${sessionScope.MOBILE}</a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                     <ui:insert name="content"/>
                 </div>
